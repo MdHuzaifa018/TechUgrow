@@ -1,0 +1,1 @@
+"use client"; import Navbar from "@/components/Navbar"; import Footer from "@/components/Footer"; import Services from "@/sections/Services"; import CTA from "@/sections/CTA"; export default function ServicesPage() { return ( <main> <Navbar /> <div className="pt-20"> <Services /> <CTA /> </div> <Footer /> </main> ); }
