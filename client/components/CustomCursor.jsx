@@ -12,8 +12,8 @@ export default function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 28, stiffness: 300, mass: 0.5 };
-  const trailConfig = { damping: 40, stiffness: 150, mass: 1 };
+  const springConfig = { damping: 30, stiffness: 350, mass: 0.4 };
+  const trailConfig = { damping: 45, stiffness: 200, mass: 0.8 };
 
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
@@ -21,30 +21,48 @@ export default function CustomCursor() {
   const trailYSpring = useSpring(cursorY, trailConfig);
 
   useEffect(() => {
-    setMounted(true);
+    // Delay mounting cursor slightly to prevent initial page reload DOM thread lag
+    const timer = setTimeout(() => setMounted(true), 150);
 
+    let moveTicking = false;
     const moveCursor = (e) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      if (!moveTicking) {
+        window.requestAnimationFrame(() => {
+          cursorX.set(e.clientX);
+          cursorY.set(e.clientY);
+          moveTicking = false;
+        });
+        moveTicking = true;
+      }
     };
 
+    let hoverTicking = false;
     const handleOver = (e) => {
-      const target = e.target;
-      const isInteractive = target.closest("button, a, input, textarea, select, [role='button'], .glass-card");
-      const isTextEl = target.closest("p, h1, h2, h3, h4, h5, h6, span, li");
-      setIsHovering(!!isInteractive);
-      setIsText(!!isTextEl && !isInteractive);
+      if (!hoverTicking) {
+        window.requestAnimationFrame(() => {
+          const target = e.target;
+          if (target && target.closest) {
+            const isInteractive = target.closest("button, a, input, textarea, select, [role='button'], .glass-card");
+            const isTextEl = target.closest("p, h1, h2, h3, h4, h5, h6, span, li");
+            setIsHovering(!!isInteractive);
+            setIsText(!!isTextEl && !isInteractive);
+          }
+          hoverTicking = false;
+        });
+        hoverTicking = true;
+      }
     };
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handleOver);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    window.addEventListener("mouseover", handleOver, { passive: true });
+    window.addEventListener("mousedown", handleMouseDown, { passive: true });
+    window.addEventListener("mouseup", handleMouseUp, { passive: true });
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleOver);
       window.removeEventListener("mousedown", handleMouseDown);
@@ -58,7 +76,7 @@ export default function CustomCursor() {
     <>
       {/* Outer ring */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block will-change-transform"
         style={{
           x: trailXSpring,
           y: trailYSpring,
@@ -78,12 +96,12 @@ export default function CustomCursor() {
           borderWidth: "1.5px",
           scale: isClicking ? 0.85 : 1,
         }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
       />
 
       {/* Inner dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -95,7 +113,7 @@ export default function CustomCursor() {
           scale: isClicking ? 0.5 : isHovering ? 0 : 1,
           opacity: isHovering ? 0 : 1,
         }}
-        transition={{ duration: 0.15 }}
+        transition={{ duration: 0.1 }}
       />
     </>
   );

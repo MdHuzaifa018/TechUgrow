@@ -8,11 +8,11 @@ import { useBookingModal } from "@/context/BookingContext";
 const Hero = () => {
   const { openBookingModal } = useBookingModal();
 
-  // Mouse Follow spring animation (throttled & hardware accelerated)
+  // Throttled Mouse Follow Glow
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { damping: 35, stiffness: 180 });
-  const springY = useSpring(mouseY, { damping: 35, stiffness: 180 });
+  const springX = useSpring(mouseX, { damping: 40, stiffness: 200 });
+  const springY = useSpring(mouseY, { damping: 40, stiffness: 200 });
   const glowX = useTransform(springX, (v) => `${v}px`);
   const glowY = useTransform(springY, (v) => `${v}px`);
 
@@ -32,15 +32,6 @@ const Hero = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // Headline words array
-  const headlineWords = [
-    { text: "Grow", gradient: false },
-    { text: "Your", gradient: false },
-    { text: "Business", gradient: false },
-    { text: "With", gradient: false },
-    { text: "TechUgrow", gradient: true },
-  ];
-
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden bg-background">
       {/* Grid Background */}
@@ -58,26 +49,10 @@ const Hero = () => {
         />
       </div>
 
-      {/* Animated Glowing Orbs */}
+      {/* Hardware-Accelerated Ambient Glow Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <motion.div
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.05, 1],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[55%] h-[55%] bg-primary/15 dark:bg-primary/10 rounded-full blur-[130px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-            scale: [1, 1.08, 1],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-accent/15 dark:bg-accent/10 rounded-full blur-[140px]"
-        />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/15 dark:bg-primary/10 rounded-full blur-[130px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] bg-accent/15 dark:bg-accent/10 rounded-full blur-[130px]" />
       </div>
 
       {/* Smooth Mouse Follow Glow (Desktop only) */}
@@ -100,13 +75,13 @@ const Hero = () => {
           <div className="text-left">
             {/* Top Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <div
                 onClick={() => openBookingModal("Free Growth Audit")}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-primary/25 text-sm font-bold text-primary mb-8 cursor-pointer shadow-xl shadow-primary/5 group hover:border-primary/50 hover:scale-102 transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-primary/25 text-sm font-bold text-primary mb-8 cursor-pointer shadow-xl shadow-primary/5 group hover:border-primary/50 transition-all"
               >
                 <Sparkles size={15} className="animate-pulse text-cyan-400" />
                 <span>Full-Stack Digital Growth Agency 🚀</span>
@@ -114,36 +89,25 @@ const Hero = () => {
               </div>
             </motion.div>
 
-            {/* Headline Word-by-Word Animated Entrance */}
-            <div className="mb-8 overflow-hidden">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.94] text-foreground flex flex-wrap gap-x-4 gap-y-2">
-                {headlineWords.map((word, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, y: 35, rotate: 2 }}
-                    animate={{ opacity: 1, y: 0, rotate: 0 }}
-                    transition={{
-                      duration: 0.7,
-                      delay: 0.1 + i * 0.08,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className={`inline-block ${
-                      word.gradient
-                        ? "gradient-text drop-shadow-2xl font-black"
-                        : ""
-                    }`}
-                  >
-                    {word.text}
-                  </motion.span>
-                ))}
-              </h1>
-            </div>
-
-            {/* Subtitle */}
+            {/* Headline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-8"
+            >
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.94] text-foreground">
+                Grow Your Business <br />
+                With{" "}
+                <span className="gradient-text drop-shadow-2xl">TechUgrow</span>
+              </h1>
+            </motion.div>
+
+            {/* Subtitle */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="text-lg md:text-xl text-secondary mb-10 max-w-xl font-medium leading-relaxed">
                 We build websites, run Meta Ads, automate your business with AI, create stunning UI/UX, shoot brand videos, and manage your entire digital presence — all under one roof.
@@ -152,12 +116,12 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col sm:flex-row items-start gap-4 mb-10"
             >
-              <Magnetic strength={0.2}>
+              <Magnetic strength={0.15}>
                 <Button
                   onClick={() => openBookingModal("Start Your Project")}
                   className="px-8 py-4 text-base group relative overflow-hidden font-bold shadow-xl shadow-blue-500/20 cursor-pointer"
@@ -168,7 +132,7 @@ const Hero = () => {
                 </Button>
               </Magnetic>
 
-              <Magnetic strength={0.2}>
+              <Magnetic strength={0.15}>
                 <a href="#services">
                   <Button variant="secondary" className="px-8 py-4 text-base group font-bold cursor-pointer">
                     <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center mr-2">
@@ -184,7 +148,7 @@ const Hero = () => {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-6 flex-wrap"
             >
               <div className="flex items-center gap-2">
@@ -217,15 +181,15 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Right Column: Hero Visual Image & Gentle Floating Cards */}
+          {/* Right Column: Hero Visual Image & Floating Badges */}
           <div className="relative hidden lg:flex items-center justify-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 25 }}
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
               className="relative w-full max-w-lg"
             >
-              {/* Main Image Container with subtle hover zoom */}
+              {/* Main Image Container */}
               <div className="relative rounded-[2.5rem] overflow-hidden border border-border/50 shadow-[0_30px_90px_-20px_rgba(59,130,246,0.25)] group">
                 <img
                   src="/hero-dev-team.png"
@@ -233,19 +197,15 @@ const Hero = () => {
                   className="w-full h-auto object-cover rounded-[2.5rem] transition-transform duration-700 ease-out group-hover:scale-104"
                   style={{ aspectRatio: "4/3" }}
                   loading="eager"
+                  fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent rounded-[2.5rem]" />
               </div>
 
-              {/* Gentle Floating Badge 1 (Top-Left) */}
+              {/* Gentle Floating Badges */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
-                transition={{
-                  opacity: { delay: 0.6, duration: 0.6 },
-                  x: { delay: 0.6, duration: 0.6 },
-                  y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.6 },
-                }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-4 -left-6 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl"
               >
                 <div className="w-8 h-8 rounded-xl bg-green-500/15 flex items-center justify-center">
@@ -257,15 +217,9 @@ const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Gentle Floating Badge 2 (Top-Right) */}
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0, y: [0, 6, 0] }}
-                transition={{
-                  opacity: { delay: 0.7, duration: 0.6 },
-                  x: { delay: 0.7, duration: 0.6 },
-                  y: { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
-                }}
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 className="absolute -top-3 -right-6 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-primary/20 shadow-xl backdrop-blur-xl"
               >
                 <div className="w-8 h-8 rounded-xl bg-primary/15 flex items-center justify-center">
@@ -277,14 +231,9 @@ const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Gentle Floating Badge 3 (Bottom-Left) */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: [0, 6, 0] }}
-                transition={{
-                  opacity: { delay: 0.8, duration: 0.6 },
-                  y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.8 },
-                }}
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
                 className="absolute -bottom-4 -left-6 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl"
               >
                 <div className="w-8 h-8 rounded-xl bg-violet-500/15 flex items-center justify-center">
@@ -296,14 +245,9 @@ const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Gentle Floating Badge 4 (Bottom-Right) */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: [0, -6, 0] }}
-                transition={{
-                  opacity: { delay: 0.9, duration: 0.6 },
-                  y: { duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
-                }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="absolute -bottom-4 -right-4 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl"
               >
                 <div className="w-8 h-8 rounded-xl bg-cyan-500/15 flex items-center justify-center">
@@ -316,16 +260,13 @@ const Hero = () => {
               </motion.div>
 
               {/* Center Live Status Badge */}
-              <motion.div
+              <div
                 onClick={() => openBookingModal("New Client Onboarding")}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 0.5 }}
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/25 backdrop-blur-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
               >
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-xs font-bold text-foreground/90 whitespace-nowrap">Currently accepting new clients 🔥</span>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -344,10 +285,10 @@ const Hero = () => {
             ].map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: i * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => openBookingModal(item.label)}
                 className="flex items-start gap-3 p-4 rounded-2xl hover:bg-foreground/5 transition-colors group cursor-pointer"
               >
