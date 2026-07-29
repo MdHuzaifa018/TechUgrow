@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
 
 @theme {
   --font-sans: var(--font-inter), 'Inter', sans-serif;
@@ -27,7 +29,7 @@
 @layer base {
   :root {
     --background: #F8FAFC;
-    --secondary-bg: #F1F5F9;
+    --secondary-bg: #F0F4FA;
     --foreground: #0F172A;
     
     --primary: #2563EB;
@@ -38,37 +40,37 @@
     --card: #FFFFFF;
     --card-foreground: #0F172A;
     
-    --muted: #F1F5F9;
+    --muted: #E2E8F0;
     --muted-foreground: #64748B;
     
-    --border: rgba(15, 23, 42, 0.06);
-    --glass-border: rgba(15, 23, 42, 0.04);
+    --border: rgba(226, 232, 240, 0.8);
+    --glass-border: rgba(37, 99, 235, 0.08);
     
     --sidebar: #FFFFFF;
-    --navbar: rgba(255, 255, 255, 0.8);
+    --navbar: rgba(255, 255, 255, 0.85);
   }
 
   .dark {
-    --background: #050816;
+    --background: #070A13;
     --secondary-bg: #0B1120;
-    --foreground: #FFFFFF;
+    --foreground: #F8FAFC;
     
     --primary: #3b82f6;
     --primary-rgb: 59, 130, 246;
     --secondary: #94A3B8;
     --accent: #818cf8;
     
-    --card: rgba(15, 23, 42, 0.75);
+    --card: #0F172A;
     --card-foreground: #FFFFFF;
     
-    --muted: #1e293b;
-    --muted-foreground: #64748B;
+    --muted: #1E293B;
+    --muted-foreground: #94A3B8;
     
-    --border: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.08);
     
-    --sidebar: #020617;
-    --navbar: rgba(2, 6, 23, 0.7);
+    --sidebar: #090E1A;
+    --navbar: rgba(9, 14, 26, 0.85);
   }
 
   * {
@@ -81,6 +83,11 @@
     font-family: var(--font-sans);
     overflow-x: hidden;
     transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  input, select, textarea {
+    background-color: transparent;
+    color: var(--foreground);
   }
 
   h1, h2, h3, h4, h5, h6 {

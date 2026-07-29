@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment Variables & Secrets (CRITICAL: NEVER PUSH SECRETS TO GITHUB)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+server/.env
+client/.env
+
+# Build & Output Folders
+dist/
+client/dist/
+build/
+client/build/
+.next/
+out/
+
+# Logs & Temporary Files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE & Editor Directories
+.vscode/
+.idea/
+*.suo
+*.ntvsopt
+*.njsproj
+*.sln
+*.sw?
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Temporary / System generated folders
+.gemini/
+brain/
+scratch/

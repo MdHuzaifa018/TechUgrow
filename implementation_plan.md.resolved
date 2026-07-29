@@ -1,0 +1,157 @@
+# DIGITALIZEU — Complete Full-Stack Implementation Plan
+
+## Tech Stack
+- **Frontend**: React (Vite) + Tailwind CSS v4 + Framer Motion
+- **Backend**: Node.js + Express.js
+- **Database**: MongoDB + Mongoose
+- **Auth**: JWT (JSON Web Tokens)
+- **File Upload**: Cloudinary
+- **Notifications**: WhatsApp API redirect + Email (Nodemailer)
+
+---
+
+## Phase 1: Backend Foundation & Setup
+> **Goal**: Express server, MongoDB connection, folder structure
+
+### Tasks:
+1. Create `server/` folder with Express app
+2. Setup MongoDB connection with Mongoose
+3. Setup environment variables (.env)
+4. Setup CORS, body-parser, middleware
+5. Create folder structure: `models/`, `routes/`, `controllers/`, `middleware/`, `utils/`
+
+### Files to Create:
+- `server/package.json`
+- `server/index.js` (entry point)
+- `server/config/db.js` (MongoDB connection)
+- `server/.env`
+
+---
+
+## Phase 2: Authentication System
+> **Goal**: Admin login/register with JWT
+
+### Tasks:
+1. Create Admin model (email, password, role)
+2. Create auth routes (login, register, verify)
+3. Create JWT middleware for protected routes
+4. Hash passwords with bcrypt
+
+### Files:
+- `server/models/Admin.js`
+- `server/routes/auth.js`
+- `server/controllers/authController.js`
+- `server/middleware/auth.js`
+
+---
+
+## Phase 3: Database Models (All Content)
+> **Goal**: Create all MongoDB schemas
+
+### Models to Create:
+1. **Service** — title, subtitle, description, icon, gradient, features[], results, process[], isActive, order
+2. **Package** — name, tagline, price, period, description, features[], popular, cta, badge, gradient, order
+3. **Lead** — name, email, phone, selectedPackage, selectedService, message, budget, status, createdAt
+4. **Contact** — name, email, subject, message, createdAt
+5. **Blog** — title, excerpt, content, category, author, image, status, date
+6. **Testimonial** — name, company, review, rating, image
+7. **Founder** — name, role, expertise, bio, image, socials, achievements[], years
+8. **SiteSetting** — siteName, contactEmail, phone, whatsappNumber, socialLinks, logo
+
+---
+
+## Phase 4: API Routes & Controllers (CRUD)
+> **Goal**: Full CRUD APIs for all models
+
+### Route Groups:
+| Route | Methods | Description |
+|-------|---------|-------------|
+| `/api/auth` | POST login/register | Admin auth |
+| `/api/services` | GET, POST, PUT, DELETE | Services CRUD |
+| `/api/packages` | GET, POST, PUT, DELETE | Packages CRUD |
+| `/api/leads` | GET, POST, PUT, DELETE | Lead management |
+| `/api/contacts` | GET, POST, DELETE | Contact form |
+| `/api/blogs` | GET, POST, PUT, DELETE | Blog management |
+| `/api/testimonials` | GET, POST, PUT, DELETE | Testimonials |
+| `/api/founders` | GET, POST, PUT, DELETE | Founders/team |
+| `/api/settings` | GET, PUT | Site settings |
+| `/api/upload` | POST | Cloudinary upload |
+
+---
+
+## Phase 5: Admin Panel — Connect to Backend
+> **Goal**: Make admin panel fully functional with API calls
+
+### Tasks:
+1. Create API utility (axios instance with JWT headers)
+2. Connect Services admin page → CRUD services from DB
+3. Connect Packages admin page → CRUD packages
+4. Connect Leads page → show all leads, update status
+5. Connect Blogs, Testimonials, Founders, Settings pages
+6. Add image upload via Cloudinary
+7. Add real-time lead notification count
+
+---
+
+## Phase 6: Public Website — Dynamic Content
+> **Goal**: Fetch all content from backend instead of hardcoded data
+
+### Tasks:
+1. Services section → fetch from `/api/services`
+2. Packages section → fetch from `/api/packages`
+3. Testimonials → fetch from `/api/testimonials`
+4. Founders → fetch from `/api/founders`
+5. Blog → fetch from `/api/blogs`
+6. **Lead Capture Form** — when user clicks any package/service CTA:
+   - Show modal form (name, email, phone, budget, message)
+   - POST to `/api/leads`
+   - Redirect to WhatsApp with pre-filled message
+   - Send email notification to admin
+
+---
+
+## Phase 7: WhatsApp + Email Notifications
+> **Goal**: Notify admin on every new lead
+
+### Tasks:
+1. WhatsApp redirect URL on form submit
+2. Nodemailer email notification to admin
+3. Lead status management (New → Contacted → Qualified → Closed)
+
+---
+
+## Phase 8: New Services — Video Editing & Brand Video
+> **Goal**: Add new service categories
+
+### New Services:
+1. **Video Editing** — Professional video editing, color grading, motion graphics
+2. **Brand Video Production** — Brand story videos, product demos, social media reels
+
+These will be added via admin panel (dynamic, not hardcoded).
+
+---
+
+## Phase 9: Polish & Deployment
+> **Goal**: Final testing, optimization, deployment
+
+### Tasks:
+1. Error handling & validation
+2. Loading states & skeleton screens
+3. Build optimization
+4. Deploy backend to Render
+5. Deploy frontend to Vercel
+6. Configure environment variables in production
+
+---
+
+## Services List (Final)
+### Keep:
+- Meta Ads, Landing Pages, Funnel Building, Automation Systems, Lead Generation, Website Development
+
+### Add New:
+- Video Editing & Post-Production
+- Brand Video Production
+
+### Remove (via admin panel toggle):
+- Analytics & Reporting (merge into dashboard)
+- Brand Scaling (merge into other services)
