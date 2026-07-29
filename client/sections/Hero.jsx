@@ -89,17 +89,45 @@ const Hero = () => {
               </div>
             </motion.div>
 
-            {/* Headline */}
+            {/* Headline Word-by-Word Staggered Animated Reveal */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+                },
+              }}
               className="mb-8"
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.94] text-foreground">
-                Grow Your Business <br />
-                With{" "}
-                <span className="gradient-text drop-shadow-2xl">TechUgrow</span>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.94] text-foreground flex flex-wrap gap-x-4 gap-y-2">
+                {[
+                  { text: "Grow", gradient: false },
+                  { text: "Your", gradient: false },
+                  { text: "Business", gradient: false },
+                  { text: "With", gradient: false },
+                  { text: "TechUgrow", gradient: true },
+                ].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, y: 25, filter: "blur(4px)" },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                      },
+                    }}
+                    className={`inline-block ${
+                      word.gradient ? "gradient-text drop-shadow-2xl font-black" : ""
+                    }`}
+                  >
+                    {word.text}
+                  </motion.span>
+                ))}
               </h1>
             </motion.div>
 
