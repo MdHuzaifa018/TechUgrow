@@ -64,7 +64,8 @@ export default function AdminSettings() {
           ...prev,
           name: res.data.name || "",
           email: res.data.email || "",
-          avatar: res.data.avatar || ""
+          avatar: res.data.avatar || "",
+          role: res.data.role || "admin"
         }));
       }
     } catch (err) {
@@ -176,6 +177,8 @@ export default function AdminSettings() {
   };
 
   if (loading) return <div className="flex items-center justify-center h-64"><Loader2 className="animate-spin text-primary" size={32} /></div>;
+
+  const isSuperAdmin = adminProfile.role === 'superadmin';
 
   return (
     <div className="space-y-10 max-w-4xl">
@@ -328,7 +331,19 @@ export default function AdminSettings() {
         </form>
       </div>
 
-      {/* 👥 MULTI-ADMIN TEAM MANAGEMENT SECTION */}
+      {!isSuperAdmin ? (
+        <div className="p-6 rounded-3xl bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-300 font-bold flex items-center gap-4">
+          <ShieldAlert className="text-amber-500 shrink-0" size={28} />
+          <div>
+            <p className="text-sm font-black text-foreground">Regular Admin Account</p>
+            <p className="text-xs font-medium text-muted-foreground mt-1 leading-relaxed">
+              You are logged in as a Regular Admin. General site settings, brand configuration, and Multi-Admin management are reserved exclusively for Super Admin accounts.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* 👥 MULTI-ADMIN TEAM MANAGEMENT SECTION */}
       <div className="bg-card border border-border/80 p-8 rounded-3xl space-y-6 shadow-lg shadow-black/5">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-4">
           <div className="flex items-center gap-3">
@@ -584,6 +599,8 @@ export default function AdminSettings() {
           {success && <span className="text-emerald-500 font-bold flex items-center gap-2 text-sm"><Check size={18} /> Saved successfully!</span>}
         </div>
       </form>
+      </>
+      )}
     </div>
   );
 }

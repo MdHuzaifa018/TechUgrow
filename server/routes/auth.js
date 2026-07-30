@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo } = require('../middleware/auth');
 const router = express.Router();
 
 const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '30d' });
@@ -92,8 +92,8 @@ router.get('/admins', protect, async (req, res) => {
   }
 });
 
-// POST /api/auth/admins (Create a new separate Admin account)
-router.post('/admins', protect, async (req, res) => {
+// POST /api/auth/admins (Create a new separate Admin account - Super Admin Only)
+router.post('/admins', protect, restrictTo('superadmin'), async (req, res) => {
   try {
     const { name, email, password, role, avatar } = req.body;
 
@@ -127,8 +127,8 @@ router.post('/admins', protect, async (req, res) => {
   }
 });
 
-// DELETE /api/auth/admins/:id (Delete an Admin account)
-router.delete('/admins/:id', protect, async (req, res) => {
+// DELETE /api/auth/admins/:id (Delete an Admin account - Super Admin Only)
+router.delete('/admins/:id', protect, restrictTo('superadmin'), async (req, res) => {
   try {
     if (req.admin._id.toString() === req.params.id) {
       return res.status(400).json({ message: 'You cannot delete your own logged-in admin account!' });

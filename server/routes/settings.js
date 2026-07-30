@@ -1,6 +1,6 @@
 const express = require('express');
 const SiteSetting = require('../models/SiteSetting');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
 
-router.put('/', protect, async (req, res) => {
+router.put('/', protect, restrictTo('superadmin'), async (req, res) => {
   try {
     let settings = await SiteSetting.findOne();
     if (!settings) settings = await SiteSetting.create(req.body);

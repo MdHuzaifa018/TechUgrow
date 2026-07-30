@@ -155,8 +155,18 @@ export default function AdminLayout() {
             {/* Logged in Admin Profile Display */}
             <div className="flex items-center gap-4 border-l border-border/80 pl-6">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-foreground leading-tight">{adminUser?.name || 'Admin User'}</p>
-                <p className="text-[11px] text-primary font-semibold flex items-center justify-end gap-1.5 mt-0.5">
+                <div className="flex items-center justify-end gap-2">
+                  <p className="text-sm font-bold text-foreground leading-tight">{adminUser?.name || 'Admin User'}</p>
+                  <span className={cn(
+                    "text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border",
+                    adminUser?.role === 'superadmin' 
+                      ? "bg-amber-500/15 text-amber-500 border-amber-500/30" 
+                      : "bg-blue-500/15 text-blue-500 border-blue-500/30"
+                  )}>
+                    {adminUser?.role === 'superadmin' ? 'Super Admin' : 'Admin'}
+                  </span>
+                </div>
+                <p className="text-[11px] text-muted-foreground font-semibold flex items-center justify-end gap-1.5 mt-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
                   {adminUser?.email || 'admin@techugrow.com'}
                 </p>
