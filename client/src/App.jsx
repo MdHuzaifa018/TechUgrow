@@ -32,6 +32,10 @@ import AdminServices from './pages/admin/Services';
 import AdminManagement from './pages/admin/AdminManagement';
 import AuditLogs from './pages/admin/AuditLogs';
 import Forbidden from './pages/admin/Forbidden';
+import AdminAnalyticsPage from './pages/admin/Analytics';
+import AdminBackup from './pages/admin/Backup';
+import AdminSecurity from './pages/admin/Security';
+import AdminBilling from './pages/admin/Billing';
 
 function App() {
   return (
@@ -74,6 +78,10 @@ function App() {
                 <Route path="seo-settings" element={<AdminSeoSettings />} />
                 <Route path="admin-management" element={<AdminManagement />} />
                 <Route path="audit-logs" element={<AuditLogs />} />
+                <Route path="analytics" element={<AdminAnalyticsPage />} />
+                <Route path="backup" element={<AdminBackup />} />
+                <Route path="security" element={<AdminSecurity />} />
+                <Route path="billing" element={<AdminBilling />} />
                 <Route path="403" element={<Forbidden />} />
               </Route>
             </Routes>

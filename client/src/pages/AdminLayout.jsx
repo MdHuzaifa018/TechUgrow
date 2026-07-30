@@ -3,7 +3,7 @@ import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, Users, Box, BookOpen, UserCircle, 
   MessageSquare, Settings, LogOut, Menu, X, ShieldCheck, Mail, Sun, Moon, Megaphone, Image as ImageIcon,
-  Shield, ClipboardList
+  Shield, ClipboardList, BarChart3, Database, Lock, CreditCard
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/utils/cn";
@@ -24,8 +24,12 @@ const sidebarItems = [
   { name: "SEO Settings",     href: "/admin/seo-settings",   icon: <ShieldCheck size={20} /> },
   { name: "General Settings", href: "/admin/settings",        icon: <Settings size={20} /> },
   // Super Admin only items
+  { name: "Analytics",        href: "/admin/analytics",       icon: <BarChart3 size={20} />, superAdminOnly: true },
   { name: "Admin Management", href: "/admin/admin-management", icon: <Shield size={20} />, superAdminOnly: true },
   { name: "Audit Logs",       href: "/admin/audit-logs",      icon: <ClipboardList size={20} />, superAdminOnly: true },
+  { name: "Backup & Restore", href: "/admin/backup",          icon: <Database size={20} />, superAdminOnly: true },
+  { name: "Security Policies",href: "/admin/security",        icon: <Lock size={20} />, superAdminOnly: true },
+  { name: "Billing & Plan",   href: "/admin/billing",         icon: <CreditCard size={20} />, superAdminOnly: true },
 ];
 
 export default function AdminLayout() {
