@@ -9,13 +9,13 @@ const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expires
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, avatar } = req.body;
     const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ message: 'Admin already exists' });
 
-    const admin = await Admin.create({ name, email, password });
+    const admin = await Admin.create({ name, email, password, avatar: avatar || '' });
     res.status(201).json({
-      _id: admin._id, name: admin.name, email: admin.email,
+      _id: admin._id, name: admin.name, email: admin.email, avatar: admin.avatar, role: admin.role,
       token: generateToken(admin._id),
     });
   } catch (error) {
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
     const admin = await Admin.findOne({ email });
     if (admin && (await admin.matchPassword(password))) {
       res.json({
-        _id: admin._id, name: admin.name, email: admin.email,
+        _id: admin._id, name: admin.name, email: admin.email, avatar: admin.avatar || '', role: admin.role,
         token: generateToken(admin._id),
       });
     } else {
@@ -46,13 +46,13 @@ router.get('/me', protect, async (req, res) => {
   res.json(req.admin);
 });
 
-// PUT /api/auth/update-profile (Change Admin Email & Password)
+// PUT /api/auth/update-profile (Change Admin Email, Password & Avatar)
 router.put('/update-profile', protect, async (req, res) => {
   try {
     const admin = await Admin.findById(req.admin._id);
     if (!admin) return res.status(404).json({ message: 'Admin user not found' });
 
-    const { name, email, currentPassword, newPassword } = req.body;
+    const { name, email, avatar, currentPassword, newPassword } = req.body;
 
     if (currentPassword && newPassword) {
       const isMatch = await admin.matchPassword(currentPassword);
@@ -64,6 +64,7 @@ router.put('/update-profile', protect, async (req, res) => {
 
     if (name) admin.name = name;
     if (email) admin.email = email;
+    if (avatar !== undefined) admin.avatar = avatar;
 
     const updatedAdmin = await admin.save();
 
@@ -71,8 +72,10 @@ router.put('/update-profile', protect, async (req, res) => {
       _id: updatedAdmin._id,
       name: updatedAdmin.name,
       email: updatedAdmin.email,
+      avatar: updatedAdmin.avatar || '',
+      role: updatedAdmin.role,
       token: generateToken(updatedAdmin._id),
-      message: 'Admin credentials updated successfully!'
+      message: 'Admin profile updated successfully!'
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

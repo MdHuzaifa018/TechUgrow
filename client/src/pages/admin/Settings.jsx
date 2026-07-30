@@ -15,6 +15,7 @@ export default function AdminSettings() {
   const [adminProfile, setAdminProfile] = useState({
     name: "",
     email: "",
+    avatar: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: ""
@@ -49,7 +50,8 @@ export default function AdminSettings() {
         setAdminProfile(prev => ({
           ...prev,
           name: res.data.name || "",
-          email: res.data.email || ""
+          email: res.data.email || "",
+          avatar: res.data.avatar || ""
         }));
       }
     } catch (err) {
@@ -92,20 +94,17 @@ export default function AdminSettings() {
       const res = await api.put('/auth/update-profile', {
         name: adminProfile.name,
         email: adminProfile.email,
+        avatar: adminProfile.avatar,
         currentPassword: adminProfile.currentPassword,
         newPassword: adminProfile.newPassword
       });
 
       // Update stored user details in localStorage
-      if (res.data.token) {
-        localStorage.setItem('adminToken', res.data.token);
-        localStorage.setItem('adminUser', JSON.stringify({
-          name: res.data.name,
-          email: res.data.email
-        }));
+      if (res.data) {
+        localStorage.setItem('adminInfo', JSON.stringify(res.data));
       }
 
-      toast.success("🔐 Admin Email & Password updated successfully! Please use your new credentials next time you log in.");
+      toast.success("🔐 Admin profile & credentials updated successfully!");
       
       // Clear password fields
       setAdminProfile(prev => ({
@@ -150,6 +149,14 @@ export default function AdminSettings() {
 
         <form onSubmit={handleUpdateAdminProfile} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2 md:col-span-2">
+              <ImageUpload 
+                value={adminProfile.avatar || ""} 
+                onChange={url => setAdminProfile({...adminProfile, avatar: url})} 
+                label="Admin Profile Picture / Avatar" 
+              />
+            </div>
+
             <div className="space-y-2">
               <label className="text-sm font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
                 <User size={15} className="text-primary" /> Admin Full Name *

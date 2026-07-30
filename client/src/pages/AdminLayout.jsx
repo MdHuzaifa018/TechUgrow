@@ -7,6 +7,7 @@ import {
 import { useTheme } from "next-themes";
 import { cn } from "@/utils/cn";
 import Logo, { TechUGrowIcon } from "@/components/Logo";
+import api from "@/src/api";
 
 const sidebarItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: <LayoutDashboard size={20} /> },
@@ -40,8 +41,19 @@ export default function AdminLayout() {
     
     if (pathname !== '/admin' && pathname !== '/admin/login' && !token) {
       navigate('/admin');
-    } else if (info) {
-      setAdminUser(JSON.parse(info));
+    } else if (token) {
+      if (info) {
+        try { setAdminUser(JSON.parse(info)); } catch(e){}
+      }
+      // Fetch fresh admin profile (with custom avatar & email) from backend
+      api.get('/auth/me')
+        .then(res => {
+          if (res.data) {
+            setAdminUser(res.data);
+            localStorage.setItem('adminInfo', JSON.stringify(res.data));
+          }
+        })
+        .catch(() => {});
     }
   }, [pathname, navigate]);
 
@@ -140,15 +152,28 @@ export default function AdminLayout() {
               </button>
             )}
 
+            {/* Logged in Admin Profile Display */}
             <div className="flex items-center gap-4 border-l border-border/80 pl-6">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-foreground">{adminUser?.name || 'Admin User'}</p>
-                <p className="text-[10px] text-primary uppercase tracking-wider font-extrabold">Super Admin</p>
+                <p className="text-sm font-bold text-foreground leading-tight">{adminUser?.name || 'Admin User'}</p>
+                <p className="text-[11px] text-primary font-semibold flex items-center justify-end gap-1.5 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                  {adminUser?.email || 'admin@techugrow.com'}
+                </p>
               </div>
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shadow-md shadow-blue-500/20">
-                <div className="w-full h-full rounded-[10px] bg-card flex items-center justify-center font-black text-foreground text-sm">
-                  {adminUser?.name?.charAt(0) || 'A'}
-                </div>
+              
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shadow-md shadow-blue-500/20 overflow-hidden shrink-0">
+                {adminUser?.avatar ? (
+                  <img 
+                    src={adminUser.avatar} 
+                    alt={adminUser.name || "Admin Avatar"} 
+                    className="w-full h-full object-cover rounded-[10px]" 
+                  />
+                ) : (
+                  <div className="w-full h-full rounded-[10px] bg-card flex items-center justify-center font-black text-foreground text-sm uppercase">
+                    {adminUser?.name?.charAt(0) || 'A'}
+                  </div>
+                )}
               </div>
             </div>
           </div>
