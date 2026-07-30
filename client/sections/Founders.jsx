@@ -166,11 +166,6 @@ export default function Founders() {
                         {founder.years || "Executive Leader"}
                       </div>
 
-                      {/* Studio Color Graded Quality Badge */}
-                      <div className="absolute top-4 right-4 z-20 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold text-slate-300 uppercase tracking-wider hidden sm:block">
-                        Pro Tone Grade
-                      </div>
-
                       {/* Overlay Name & Role inside photo bottom */}
                       <div className="absolute bottom-6 left-6 right-6 z-20 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] transform group-hover:-translate-y-1 transition-transform duration-300">
                         <span className="text-xs font-black uppercase tracking-widest text-cyan-400 bg-cyan-500/20 border border-cyan-500/30 px-3 py-1 rounded-lg inline-block mb-2 backdrop-blur-sm">
