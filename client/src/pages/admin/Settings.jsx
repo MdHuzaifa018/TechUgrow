@@ -76,9 +76,11 @@ export default function AdminSettings() {
   const fetchAdminsList = async () => {
     try {
       const res = await api.get('/auth/admins');
-      setAdminsList(res.data || []);
+      const list = Array.isArray(res.data) ? res.data : (res.data?.admins || []);
+      setAdminsList(list);
     } catch (err) {
       console.error("Failed to fetch admins list", err);
+      setAdminsList([]);
     }
   };
 
@@ -451,7 +453,7 @@ export default function AdminSettings() {
 
         {/* Admins List Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {adminsList.map((adm) => {
+          {(Array.isArray(adminsList) ? adminsList : []).map((adm) => {
             const isSelf = adminProfile.email?.toLowerCase() === adm.email?.toLowerCase();
             return (
               <div key={adm._id} className="p-4 rounded-2xl bg-secondary-bg/40 border border-border/80 flex items-center justify-between gap-4">
