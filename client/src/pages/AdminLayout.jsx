@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, Users, Box, BookOpen, UserCircle, 
-  MessageSquare, Settings, LogOut, Menu, X, ShieldCheck, Mail, Sun, Moon, Megaphone, Image as ImageIcon
+  MessageSquare, Settings, LogOut, Menu, X, ShieldCheck, Mail, Sun, Moon, Megaphone, Image as ImageIcon,
+  Shield, ClipboardList
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/utils/cn";
@@ -10,18 +11,21 @@ import Logo, { TechUGrowIcon } from "@/components/Logo";
 import api from "@/src/api";
 
 const sidebarItems = [
-  { name: "Dashboard", href: "/admin/dashboard", icon: <LayoutDashboard size={20} /> },
-  { name: "Leads", href: "/admin/leads", icon: <Users size={20} /> },
-  { name: "Services", href: "/admin/services", icon: <Megaphone size={20} /> },
-  { name: "Packages", href: "/admin/packages", icon: <Box size={20} /> },
-  { name: "Blogs", href: "/admin/blogs", icon: <BookOpen size={20} /> },
-  { name: "Founders", href: "/admin/founders", icon: <UserCircle size={20} /> },
-  { name: "Team", href: "/admin/team", icon: <Users size={20} /> },
-  { name: "Gallery", href: "/admin/gallery", icon: <ImageIcon size={20} /> },
-  { name: "Testimonials", href: "/admin/testimonials", icon: <MessageSquare size={20} /> },
-  { name: "Contacts", href: "/admin/contacts", icon: <Mail size={20} /> },
-  { name: "SEO Settings", href: "/admin/seo-settings", icon: <ShieldCheck size={20} /> },
-  { name: "General Settings", href: "/admin/settings", icon: <Settings size={20} /> },
+  { name: "Dashboard",        href: "/admin/dashboard",       icon: <LayoutDashboard size={20} /> },
+  { name: "Leads",            href: "/admin/leads",           icon: <Users size={20} /> },
+  { name: "Services",         href: "/admin/services",        icon: <Megaphone size={20} /> },
+  { name: "Packages",         href: "/admin/packages",        icon: <Box size={20} /> },
+  { name: "Blogs",            href: "/admin/blogs",           icon: <BookOpen size={20} /> },
+  { name: "Founders",         href: "/admin/founders",        icon: <UserCircle size={20} /> },
+  { name: "Team",             href: "/admin/team",            icon: <Users size={20} /> },
+  { name: "Gallery",          href: "/admin/gallery",         icon: <ImageIcon size={20} /> },
+  { name: "Testimonials",     href: "/admin/testimonials",    icon: <MessageSquare size={20} /> },
+  { name: "Contacts",         href: "/admin/contacts",        icon: <Mail size={20} /> },
+  { name: "SEO Settings",     href: "/admin/seo-settings",   icon: <ShieldCheck size={20} /> },
+  { name: "General Settings", href: "/admin/settings",        icon: <Settings size={20} /> },
+  // Super Admin only items
+  { name: "Admin Management", href: "/admin/admin-management", icon: <Shield size={20} />, superAdminOnly: true },
+  { name: "Audit Logs",       href: "/admin/audit-logs",      icon: <ClipboardList size={20} />, superAdminOnly: true },
 ];
 
 export default function AdminLayout() {
@@ -91,7 +95,9 @@ export default function AdminLayout() {
         <nav 
           className="flex-grow overflow-y-auto px-3 py-6 space-y-2 custom-scrollbar"
         >
-          {sidebarItems.map((item) => {
+          {sidebarItems
+            .filter(item => !item.superAdminOnly || adminUser?.role === 'superadmin')
+            .map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link

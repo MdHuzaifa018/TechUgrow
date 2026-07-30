@@ -1,6 +1,6 @@
 const express = require('express');
 const Lead = require('../models/Lead');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo, logAudit } = require('../middleware/auth');
 const { sendEmail, getWhatsAppUrl } = require('../utils/notifications');
 const SiteSetting = require('../models/SiteSetting');
 const router = express.Router();
@@ -57,9 +57,12 @@ router.put('/:id', protect, async (req, res) => {
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
 
-// DELETE /api/leads/:id — Admin
-router.delete('/:id', protect, async (req, res) => {
+// DELETE /api/leads/:id — Super Admin only
+router.delete('/:id', protect, restrictTo('superadmin'), async (req, res) => {
   try {
+    const lead = await Lead.findById(req.params.id);
+    if (!lead) return res.status(404).json({ message: 'Lead not found' });
+    await logAudit(req, { action: 'DELETE', resource: 'Lead', resourceId: lead._id, description: `Deleted lead: ${lead.name}`, oldValue: { name: lead.name, email: lead.email } });
     await Lead.findByIdAndDelete(req.params.id);
     res.json({ message: 'Lead deleted' });
   } catch (error) { res.status(500).json({ message: error.message }); }

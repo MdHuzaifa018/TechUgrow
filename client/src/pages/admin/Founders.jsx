@@ -7,6 +7,7 @@ import api from "@/src/api";
 export default function AdminFounders() {
   const [founders, setFounders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isSuperAdmin = (() => { try { return JSON.parse(localStorage.getItem('adminInfo') || '{}')?.role === 'superadmin'; } catch { return false; } })();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentFounder, setCurrentFounder] = useState(null);
   
@@ -123,9 +124,11 @@ export default function AdminFounders() {
           <h1 className="text-3xl font-black text-foreground tracking-tight">Founders & Leadership</h1>
           <p className="text-muted-foreground mt-1">Manage executive profiles and founder vision statements.</p>
         </div>
+        {isSuperAdmin && (
         <Button onClick={() => handleOpenModal()} className="gap-2 button-gradient text-white shadow-lg shadow-blue-500/20">
           <Plus size={18} /> Add Founder
         </Button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -144,7 +147,7 @@ export default function AdminFounders() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => handleOpenModal(founder)} className="p-2.5 bg-blue-500/10 hover:bg-blue-500/20 rounded-xl text-blue-600 dark:text-blue-400 border border-blue-500/20 transition-all cursor-pointer"><Pencil size={16} /></button>
-                  <button onClick={() => handleDelete(founder._id)} className="p-2.5 bg-red-500/10 hover:bg-red-500/20 rounded-xl text-red-500 border border-red-500/20 transition-all cursor-pointer"><Trash2 size={16} /></button>
+                  {isSuperAdmin && <button onClick={() => handleDelete(founder._id)} className="p-2.5 bg-red-500/10 hover:bg-red-500/20 rounded-xl text-red-500 border border-red-500/20 transition-all cursor-pointer"><Trash2 size={16} /></button>}
                 </div>
               </div>
 

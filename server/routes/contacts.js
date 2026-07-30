@@ -1,7 +1,7 @@
 const express = require('express');
 const Contact = require('../models/Contact');
 const Lead = require('../models/Lead');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo } = require('../middleware/auth');
 const { sendEmail, getWhatsAppUrl } = require('../utils/notifications');
 const SiteSetting = require('../models/SiteSetting');
 const router = express.Router();
@@ -84,8 +84,8 @@ router.put('/:id', protect, async (req, res) => {
   }
 });
 
-// DELETE /api/contacts/:id — Admin delete contact message
-router.delete('/:id', protect, async (req, res) => {
+// DELETE /api/contacts/:id — Super Admin only
+router.delete('/:id', protect, restrictTo('superadmin'), async (req, res) => {
   try { 
     await Contact.findByIdAndDelete(req.params.id); 
     res.json({ message: 'Contact message deleted successfully' }); 

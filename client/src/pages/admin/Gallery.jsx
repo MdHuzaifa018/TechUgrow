@@ -7,6 +7,7 @@ import api from "@/src/api";
 export default function AdminGallery() {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isSuperAdmin = (() => { try { return JSON.parse(localStorage.getItem('adminInfo') || '{}')?.role === 'superadmin'; } catch { return false; } })();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   
@@ -112,7 +113,7 @@ export default function AdminGallery() {
               </div>
               <div className="flex gap-1.5 shrink-0 ml-2">
                 <button onClick={() => handleOpenModal(item)} className="p-2 bg-blue-500/10 hover:bg-blue-500/20 rounded-xl text-blue-600 dark:text-blue-400 border border-blue-500/20 transition-all cursor-pointer"><Pencil size={14} /></button>
-                <button onClick={() => handleDelete(item._id)} className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-xl text-red-500 border border-red-500/20 transition-all cursor-pointer"><Trash2 size={14} /></button>
+                {isSuperAdmin && <button onClick={() => handleDelete(item._id)} className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-xl text-red-500 border border-red-500/20 transition-all cursor-pointer"><Trash2 size={14} /></button>}
               </div>
             </div>
           </div>

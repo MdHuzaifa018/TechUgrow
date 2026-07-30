@@ -42,6 +42,7 @@ app.use('/api/team', require('./routes/team'));
 app.use('/api/gallery', require('./routes/gallery'));
 app.use('/api/settings', require('./routes/settings'));
 app.use('/api/upload', require('./routes/upload'));
+app.use('/api/audit-logs', require('./routes/audit-logs'));
 
 // Health check endpoint for UptimeRobot / Ping bot 24/7 Keep-Alive
 app.get('/health', (req, res) => res.status(200).json({ status: 'OK', message: 'TechUGrow API Health Check 🚀', timestamp: new Date() }));

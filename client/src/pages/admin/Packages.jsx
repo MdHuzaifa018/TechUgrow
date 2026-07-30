@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 export default function AdminPackages() {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isSuperAdmin = (() => { try { return JSON.parse(localStorage.getItem('adminInfo') || '{}')?.role === 'superadmin'; } catch { return false; } })();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPackage, setCurrentPackage] = useState(null);
   
@@ -160,6 +161,7 @@ export default function AdminPackages() {
                   >
                     <Pencil size={16} />
                   </button>
+                  {isSuperAdmin && (
                   <button 
                     onClick={() => handleDelete(pkg._id)} 
                     className="p-2.5 bg-red-500/10 hover:bg-red-500/20 rounded-xl text-red-500 border border-red-500/20 transition-all cursor-pointer"
@@ -167,6 +169,7 @@ export default function AdminPackages() {
                   >
                     <Trash2 size={16} />
                   </button>
+                  )}
                 </div>
               </div>
 

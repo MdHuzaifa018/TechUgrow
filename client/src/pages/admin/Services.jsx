@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 export default function AdminServices() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isSuperAdmin = (() => { try { return JSON.parse(localStorage.getItem('adminInfo') || '{}')?.role === 'superadmin'; } catch { return false; } })();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentService, setCurrentService] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -165,6 +166,7 @@ export default function AdminServices() {
                   >
                     <Pencil size={16} />
                   </button>
+                  {isSuperAdmin && (
                   <button 
                     type="button"
                     onClick={(e) => handleDelete(service._id, e)} 
@@ -173,6 +175,7 @@ export default function AdminServices() {
                   >
                     <Trash2 size={16} />
                   </button>
+                  )}
                 </div>
               </div>
 

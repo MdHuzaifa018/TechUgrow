@@ -29,6 +29,9 @@ import AdminTestimonials from './pages/admin/Testimonials';
 import AdminSettings from './pages/admin/Settings';
 import AdminSeoSettings from './pages/admin/SeoSettings';
 import AdminServices from './pages/admin/Services';
+import AdminManagement from './pages/admin/AdminManagement';
+import AuditLogs from './pages/admin/AuditLogs';
+import Forbidden from './pages/admin/Forbidden';
 
 function App() {
   return (
@@ -69,6 +72,9 @@ function App() {
                 <Route path="testimonials" element={<AdminTestimonials />} />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="seo-settings" element={<AdminSeoSettings />} />
+                <Route path="admin-management" element={<AdminManagement />} />
+                <Route path="audit-logs" element={<AuditLogs />} />
+                <Route path="403" element={<Forbidden />} />
               </Route>
             </Routes>
           </LenisProvider>

@@ -1,6 +1,6 @@
 const express = require('express');
 const Team = require('../models/Team');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -21,7 +21,8 @@ router.put('/:id', protect, async (req, res) => {
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
 
-router.delete('/:id', protect, async (req, res) => {
+// DELETE /api/team/:id — Super Admin only
+router.delete('/:id', protect, restrictTo('superadmin'), async (req, res) => {
   try { await Team.findByIdAndDelete(req.params.id); res.json({ message: 'Deleted' }); }
   catch (error) { res.status(500).json({ message: error.message }); }
 });

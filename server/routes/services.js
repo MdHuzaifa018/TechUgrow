@@ -1,6 +1,6 @@
 const express = require('express');
 const Service = require('../models/Service');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo } = require('../middleware/auth');
 const router = express.Router();
 
 // GET /api/services — Public (active only)
@@ -44,8 +44,8 @@ router.put('/:id', protect, async (req, res) => {
   }
 });
 
-// DELETE /api/services/:id — Admin
-router.delete('/:id', protect, async (req, res) => {
+// DELETE /api/services/:id — Super Admin only
+router.delete('/:id', protect, restrictTo('superadmin'), async (req, res) => {
   try {
     await Service.findByIdAndDelete(req.params.id);
     res.json({ message: 'Service deleted' });

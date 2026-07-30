@@ -1,6 +1,6 @@
 const express = require('express');
 const Package = require('../models/Package');
-const { protect } = require('../middleware/auth');
+const { protect, restrictTo } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -32,7 +32,8 @@ router.put('/:id', protect, async (req, res) => {
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
 
-router.delete('/:id', protect, async (req, res) => {
+// DELETE /api/packages/:id — Super Admin only
+router.delete('/:id', protect, restrictTo('superadmin'), async (req, res) => {
   try {
     await Package.findByIdAndDelete(req.params.id);
     res.json({ message: 'Package deleted' });
