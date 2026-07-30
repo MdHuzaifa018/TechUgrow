@@ -10,10 +10,10 @@ const staticFounders = [
     name: "Amritansh",
     role: "Founder & CEO",
     expertise: "Growth Strategy & Performance Marketing",
-    bio: "Former performance marketer at a Top 10 digital agency who scaled over $20M in ad spend with consistent 4–6x ROAS. Zaid founded TechUGrow with a singular mission: make enterprise-level growth systems accessible to ambitious brands of all sizes.",
+    bio: "Former performance marketer at a Top 10 digital agency who scaled over $20M in ad spend with consistent 4–6x ROAS. Amritansh founded TechUGrow with a singular mission: make enterprise-level growth systems accessible to ambitious brands of all sizes.",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
     quote: "We don't just deliver clicks — we build predictable revenue engines that dominate markets.",
-    socials: { linkedin: "https://linkedin.com", instagram: "https://instagram.com", email: "zaid@techugrow.com" },
+    socials: { linkedin: "https://linkedin.com", instagram: "https://instagram.com", email: "amritansh@techugrow.com" },
     achievements: ["$20M+ Ad Spend Scaled", "4–6x Average ROAS", "200+ Brands Scaled"],
     gradient: "from-blue-600 via-indigo-500 to-cyan-400",
     glowColor: "rgba(59,130,246,0.35)",
@@ -23,10 +23,10 @@ const staticFounders = [
     name: "Huzaif Sheikh",
     role: "Co-Founder & Head of Automation",
     expertise: "CRM Systems & Marketing Automation",
-    bio: "Automation architect and CRM specialist who spent 6 years building sales infrastructure for SaaS companies. Aria leads TechUGrow's technology stack — designing the intelligent systems that let our clients scale without scaling their workload.",
+    bio: "Automation architect and CRM specialist who spent 6 years building sales infrastructure for SaaS companies. Huzaif leads TechUGrow's technology stack — designing the intelligent systems that let our clients scale without scaling their workload.",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
     quote: "Automation is the ultimate leverage. We replace manual bottlenecks with flawless AI workflows.",
-    socials: { linkedin: "https://linkedin.com", instagram: "https://instagram.com", email: "aria@techugrow.com" },
+    socials: { linkedin: "https://linkedin.com", instagram: "https://instagram.com", email: "huzaif@techugrow.com" },
     achievements: ["50+ CRM Architectures", "30h/wk Automated Per Client", "99% Client Retention"],
     gradient: "from-purple-600 via-indigo-500 to-blue-500",
     glowColor: "rgba(168,85,247,0.35)",
@@ -132,8 +132,8 @@ export default function Founders() {
                 transition={{ duration: 0.8 }}
                 className="group relative"
               >
-                {/* Vibrant Background Glow on Hover */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 rounded-[2.8rem] opacity-0 group-hover:opacity-25 transition-opacity duration-500 blur-xl pointer-events-none" />
+                {/* Subtle Ambiance Background Glow on Hover */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 via-indigo-600/15 to-cyan-500/20 rounded-[2.8rem] opacity-0 group-hover:opacity-30 transition-opacity duration-500 blur-2xl pointer-events-none" />
 
                 <div className="bg-card border border-border/90 rounded-[2.5rem] p-6 sm:p-10 shadow-2xl shadow-black/5 relative overflow-hidden group-hover:border-primary/60 group-hover:shadow-2xl transition-all duration-500 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                   
@@ -142,22 +142,33 @@ export default function Founders() {
 
                   {/* LARGE HIGH-IMPACT PORTRAIT IMAGE CONTAINER */}
                   <div className={`lg:col-span-5 relative ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
-                    <div className="relative rounded-3xl overflow-hidden border-2 border-border/80 shadow-2xl group-hover:border-primary/60 transition-all duration-500 bg-slate-950">
+                    <div className="relative rounded-3xl overflow-hidden border border-slate-700/50 dark:border-slate-800/80 shadow-2xl group-hover:border-primary/50 transition-all duration-500 bg-slate-950">
                       
-                      {/* Image Zoom, Brightness & Lighting Effect */}
+                      {/* Image Zoom, Soft Color Grading & Anti-Glare Light Management */}
                       <img
                         src={founder.image}
                         alt={founder.name}
-                        className="w-full h-[360px] sm:h-[450px] lg:h-[480px] object-cover object-center transform group-hover:scale-108 transition-transform duration-700 ease-out filter brightness-110 contrast-[1.05]"
+                        className="w-full h-[360px] sm:h-[450px] lg:h-[480px] object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-[0.94] contrast-[0.97] saturate-[0.95] group-hover:brightness-[0.98] group-hover:contrast-[1.00]"
                       />
                       
-                      {/* Optimized Bottom Text Contrast Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-50 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
+                      {/* Layer 1: Anti-Glare Multiply Matte Overlay (Cuts Specular Overhead Light Glare) */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/35 via-slate-900/10 to-slate-950/75 mix-blend-multiply pointer-events-none z-10" />
+
+                      {/* Layer 2: Soft Studio Vignette Frame (Smooth Edge Softening) */}
+                      <div className="absolute inset-0 shadow-[inset_0_0_55px_rgba(15,23,42,0.65)] pointer-events-none z-10 rounded-3xl" />
+
+                      {/* Layer 3: Smooth Bottom Scrim Gradient for Text Legibility */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-10" />
 
                       {/* Floating Experience Badge */}
-                      <div className="absolute top-4 left-4 z-20 px-4 py-2 rounded-2xl bg-black/70 backdrop-blur-md border border-white/20 text-white text-xs font-extrabold flex items-center gap-2 shadow-lg group-hover:border-primary/60 transition-colors">
+                      <div className="absolute top-4 left-4 z-20 px-3.5 py-1.5 rounded-xl bg-slate-950/75 backdrop-blur-md border border-white/15 text-white text-xs font-extrabold flex items-center gap-2 shadow-lg group-hover:border-primary/50 transition-colors">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                         {founder.years || "Executive Leader"}
+                      </div>
+
+                      {/* Studio Color Graded Quality Badge */}
+                      <div className="absolute top-4 right-4 z-20 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold text-slate-300 uppercase tracking-wider hidden sm:block">
+                        Pro Tone Grade
                       </div>
 
                       {/* Overlay Name & Role inside photo bottom */}

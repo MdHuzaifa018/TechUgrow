@@ -105,8 +105,9 @@ export default function Team() {
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500 filter brightness-[0.95] contrast-[0.98] saturate-[0.96]"
                       />
+                      <div className="absolute inset-0 bg-slate-950/20 mix-blend-multiply pointer-events-none" />
                     </div>
                     {/* Department Badge */}
                     <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-widest text-primary bg-card border border-primary/30 shadow-md px-3 py-0.5 rounded-full whitespace-nowrap">
