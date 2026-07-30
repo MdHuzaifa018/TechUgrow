@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Loader2, Save, Check, Lock, KeyRound, User, Mail, ShieldAlert, Eye, EyeOff } from "lucide-react";
+import { Loader2, Save, Check, Lock, KeyRound, User, Mail, ShieldAlert, Eye, EyeOff, UserPlus, Trash2, Users, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import ImageUpload from "@/components/ui/ImageUpload";
 import api from "@/src/api";
@@ -22,6 +22,18 @@ export default function AdminSettings() {
   });
   const [savingProfile, setSavingProfile] = useState(false);
 
+  // Multi-Admin Management State
+  const [adminsList, setAdminsList] = useState([]);
+  const [showAddAdminModal, setShowAddAdminModal] = useState(false);
+  const [creatingAdmin, setCreatingAdmin] = useState(false);
+  const [newAdmin, setNewAdmin] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "admin",
+    avatar: ""
+  });
+
   // Visibility Toggles for Password Fields
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -30,6 +42,7 @@ export default function AdminSettings() {
   useEffect(() => {
     fetchSettings();
     fetchAdminProfile();
+    fetchAdminsList();
   }, []);
 
   const fetchSettings = async () => {
@@ -56,6 +69,46 @@ export default function AdminSettings() {
       }
     } catch (err) {
       console.error("Failed to fetch admin profile", err);
+    }
+  };
+
+  const fetchAdminsList = async () => {
+    try {
+      const res = await api.get('/auth/admins');
+      setAdminsList(res.data || []);
+    } catch (err) {
+      console.error("Failed to fetch admins list", err);
+    }
+  };
+
+  const handleCreateAdminAccount = async (e) => {
+    e.preventDefault();
+    if (!newAdmin.name || !newAdmin.email || !newAdmin.password) {
+      toast.error("Please fill Name, Email, and Password.");
+      return;
+    }
+    setCreatingAdmin(true);
+    try {
+      await api.post('/auth/admins', newAdmin);
+      toast.success("🎉 New Admin Account created successfully!");
+      setNewAdmin({ name: "", email: "", password: "", role: "admin", avatar: "" });
+      setShowAddAdminModal(false);
+      fetchAdminsList();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to create new admin");
+    } finally {
+      setCreatingAdmin(false);
+    }
+  };
+
+  const handleDeleteAdminAccount = async (id, email) => {
+    if (!window.confirm(`Are you sure you want to delete admin account (${email})?`)) return;
+    try {
+      await api.delete(`/auth/admins/${id}`);
+      toast.success("Admin account deleted.");
+      fetchAdminsList();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to delete admin");
     }
   };
 
@@ -113,6 +166,7 @@ export default function AdminSettings() {
         newPassword: "",
         confirmPassword: ""
       }));
+      fetchAdminsList();
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to update admin profile credentials.");
@@ -127,7 +181,7 @@ export default function AdminSettings() {
     <div className="space-y-10 max-w-4xl">
       <div>
         <h1 className="text-3xl font-black text-foreground tracking-tight">General & Admin Settings</h1>
-        <p className="text-muted-foreground mt-1">Manage admin login credentials, brand details, and contact info.</p>
+        <p className="text-muted-foreground mt-1">Manage admin login credentials, multi-admin team accounts, brand details, and contact info.</p>
       </div>
 
       {/* 🔐 ADMIN ACCOUNT CREDENTIALS FORM */}
@@ -138,12 +192,12 @@ export default function AdminSettings() {
               <KeyRound size={22} />
             </div>
             <div>
-              <h2 className="text-xl font-black text-foreground">Admin Account Credentials</h2>
-              <p className="text-xs text-muted-foreground font-semibold">Change Admin Login Email & Access Password</p>
+              <h2 className="text-xl font-black text-foreground">My Profile Credentials</h2>
+              <p className="text-xs text-muted-foreground font-semibold">Update Your Personal Name, Email, Avatar & Password</p>
             </div>
           </div>
           <span className="px-3 py-1 bg-blue-500/10 text-primary border border-blue-500/20 rounded-full text-xs font-black uppercase tracking-wider">
-            Security & Auth
+            Active Account
           </span>
         </div>
 
@@ -268,10 +322,160 @@ export default function AdminSettings() {
               className="gap-2 button-gradient text-white shadow-lg shadow-blue-500/20 font-bold px-6 py-3 rounded-2xl cursor-pointer"
             >
               {savingProfile ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-              {savingProfile ? 'Updating Credentials...' : 'Update Admin Credentials'}
+              {savingProfile ? 'Updating My Profile...' : 'Save My Profile Changes'}
             </Button>
           </div>
         </form>
+      </div>
+
+      {/* 👥 MULTI-ADMIN TEAM MANAGEMENT SECTION */}
+      <div className="bg-card border border-border/80 p-8 rounded-3xl space-y-6 shadow-lg shadow-black/5">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
+              <Users size={22} />
+            </div>
+            <div>
+              <h2 className="text-xl font-black text-foreground">Multi-Admin Team Accounts</h2>
+              <p className="text-xs text-muted-foreground font-semibold">Create separate accounts for 5–6 team admins so each gets their own email & photo</p>
+            </div>
+          </div>
+          <Button 
+            onClick={() => setShowAddAdminModal(!showAddAdminModal)}
+            className="button-gradient text-white text-xs font-bold gap-2 px-4 py-2.5 rounded-xl shadow-md cursor-pointer"
+          >
+            {showAddAdminModal ? <X size={16} /> : <UserPlus size={16} />}
+            {showAddAdminModal ? 'Close Form' : '+ Add New Admin Account'}
+          </Button>
+        </div>
+
+        {/* Create New Admin Form */}
+        {showAddAdminModal && (
+          <form onSubmit={handleCreateAdminAccount} className="p-6 bg-slate-900/60 border border-primary/30 rounded-2xl space-y-5">
+            <h3 className="text-sm font-black text-primary uppercase tracking-wider flex items-center gap-2">
+              <UserPlus size={16} /> Create A New Admin Account
+            </h3>
+            
+            <div className="space-y-2">
+              <ImageUpload 
+                value={newAdmin.avatar} 
+                onChange={url => setNewAdmin({...newAdmin, avatar: url})} 
+                label="New Admin Profile Picture (Avatar)" 
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-400">Admin Name *</label>
+                <input 
+                  required
+                  type="text"
+                  placeholder="e.g. Rahul Sharma"
+                  value={newAdmin.name}
+                  onChange={e => setNewAdmin({...newAdmin, name: e.target.value})}
+                  className="w-full bg-card border border-border rounded-xl px-3.5 py-2.5 text-sm text-foreground outline-none focus:border-primary"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-400">Admin Email *</label>
+                <input 
+                  required
+                  type="email"
+                  placeholder="rahul@techugrow.com"
+                  value={newAdmin.email}
+                  onChange={e => setNewAdmin({...newAdmin, email: e.target.value})}
+                  className="w-full bg-card border border-border rounded-xl px-3.5 py-2.5 text-sm text-foreground outline-none focus:border-primary"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-400">Password *</label>
+                <input 
+                  required
+                  type="password"
+                  placeholder="Min 6 characters"
+                  value={newAdmin.password}
+                  onChange={e => setNewAdmin({...newAdmin, password: e.target.value})}
+                  className="w-full bg-card border border-border rounded-xl px-3.5 py-2.5 text-sm text-foreground outline-none focus:border-primary"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-400">Role</label>
+                <select
+                  value={newAdmin.role}
+                  onChange={e => setNewAdmin({...newAdmin, role: e.target.value})}
+                  className="w-full bg-card border border-border rounded-xl px-3.5 py-2.5 text-sm text-foreground outline-none focus:border-primary"
+                >
+                  <option value="admin">Admin</option>
+                  <option value="superadmin">Super Admin</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button 
+                type="button"
+                onClick={() => setShowAddAdminModal(false)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-foreground transition-colors"
+              >
+                Cancel
+              </button>
+              <Button 
+                type="submit" 
+                disabled={creatingAdmin}
+                className="button-gradient text-white text-xs font-bold gap-2 px-5 py-2.5 rounded-xl cursor-pointer"
+              >
+                {creatingAdmin ? <Loader2 className="animate-spin" size={14} /> : <Check size={14} />}
+                {creatingAdmin ? 'Creating Admin...' : 'Create Admin Account'}
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {/* Admins List Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {adminsList.map((adm) => {
+            const isSelf = adminProfile.email?.toLowerCase() === adm.email?.toLowerCase();
+            return (
+              <div key={adm._id} className="p-4 rounded-2xl bg-secondary-bg/40 border border-border/80 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shadow-md shrink-0 overflow-hidden">
+                    {adm.avatar ? (
+                      <img src={adm.avatar} alt={adm.name} className="w-full h-full object-cover rounded-[10px]" />
+                    ) : (
+                      <div className="w-full h-full rounded-[10px] bg-card flex items-center justify-center font-black text-foreground text-sm uppercase">
+                        {adm.name?.charAt(0) || 'A'}
+                      </div>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-bold text-foreground truncate">{adm.name}</p>
+                      {isSelf && (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                          YOU
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground truncate">{adm.email}</p>
+                  </div>
+                </div>
+
+                {!isSelf && (
+                  <button
+                    onClick={() => handleDeleteAdminAccount(adm._id, adm.email)}
+                    className="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center shrink-0 border border-red-500/20 cursor-pointer"
+                    title="Delete Admin Account"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* 🌐 GENERAL BRAND & CONTACT SETTINGS FORM */}
