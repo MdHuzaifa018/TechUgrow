@@ -209,91 +209,91 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Right Column: Hero Visual Image & Floating Badges */}
-          <div className="relative hidden lg:flex items-center justify-center">
+          {/* Right Column: Hero Visual Image & Floating Badges (Visible & Ultra-Responsive on Mobile, Tablet & Desktop) */}
+          <div className="relative flex items-center justify-center mt-12 lg:mt-0 w-full px-2 sm:px-0">
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-              className="relative w-full max-w-lg"
+              className="relative w-full max-w-lg mx-auto"
             >
               {/* Main Image Container */}
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-border/50 shadow-[0_30px_90px_-20px_rgba(59,130,246,0.25)] group">
+              <div className="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-border/50 shadow-[0_30px_90px_-20px_rgba(59,130,246,0.25)] group">
                 <img
                   src="/hero-dev-team.png"
                   alt="TechUgrow development team working on projects"
-                  className="w-full h-auto object-cover rounded-[2.5rem] transition-transform duration-700 ease-out group-hover:scale-104"
+                  className="w-full h-auto object-cover rounded-[2rem] sm:rounded-[2.5rem] transition-transform duration-700 ease-out group-hover:scale-104"
                   style={{ aspectRatio: "4/3" }}
                   loading="eager"
                   fetchPriority="high"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent rounded-[2.5rem]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent rounded-[2rem] sm:rounded-[2.5rem]" />
               </div>
 
-              {/* Gentle Floating Badges */}
+              {/* Gentle Floating Badges — Fully Responsive Position & Scale */}
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-4 -left-6 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl"
+                className="absolute -top-4 left-0 sm:-left-6 z-20 flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl scale-90 sm:scale-100 origin-top-left"
               >
-                <div className="w-8 h-8 rounded-xl bg-green-500/15 flex items-center justify-center">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0">
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-500" />
                 </div>
                 <div>
-                  <p className="text-xs font-black text-foreground">Project Delivered</p>
-                  <p className="text-[10px] text-muted-foreground">On time, every time ✓</p>
+                  <p className="text-[11px] sm:text-xs font-black text-foreground">Project Delivered</p>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground">On time, every time ✓</p>
                 </div>
               </motion.div>
 
               <motion.div
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute -top-3 -right-6 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-primary/20 shadow-xl backdrop-blur-xl"
+                className="absolute -top-3 right-0 sm:-right-6 z-20 flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl glass border border-primary/20 shadow-xl backdrop-blur-xl scale-90 sm:scale-100 origin-top-right"
               >
-                <div className="w-8 h-8 rounded-xl bg-primary/15 flex items-center justify-center">
-                  <Code2 className="w-4 h-4 text-primary" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+                  <Code2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs font-black text-foreground">12 Services</p>
-                  <p className="text-[10px] text-muted-foreground">Web · AI · Ads · Design</p>
+                  <p className="text-[11px] sm:text-xs font-black text-foreground">12 Services</p>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground">Web · AI · Ads · Design</p>
                 </div>
               </motion.div>
 
               <motion.div
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-                className="absolute -bottom-4 -left-6 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl"
+                className="absolute -bottom-4 left-0 sm:-left-6 z-20 flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl scale-90 sm:scale-100 origin-bottom-left"
               >
-                <div className="w-8 h-8 rounded-xl bg-violet-500/15 flex items-center justify-center">
-                  <Brain className="w-4 h-4 text-violet-400" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-violet-500/15 flex items-center justify-center shrink-0">
+                  <Brain className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400" />
                 </div>
                 <div>
-                  <p className="text-xs font-black text-foreground">AI Automation</p>
-                  <p className="text-[10px] text-muted-foreground">Save 80% of manual work</p>
+                  <p className="text-[11px] sm:text-xs font-black text-foreground">AI Automation</p>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground">Save 80% of manual work</p>
                 </div>
               </motion.div>
 
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-4 -right-4 z-20 flex items-center gap-2.5 px-4 py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl"
+                className="absolute -bottom-4 right-0 sm:-right-4 z-20 flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:px-4 sm:py-3 rounded-2xl glass border border-border/60 shadow-xl backdrop-blur-xl scale-90 sm:scale-100 origin-bottom-right"
               >
-                <div className="w-8 h-8 rounded-xl bg-cyan-500/15 flex items-center justify-center">
-                  <Globe className="w-4 h-4 text-cyan-400" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-500/15 flex items-center justify-center shrink-0">
+                  <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                 </div>
                 <div>
-                  <p className="text-xs font-black text-foreground">20+ Countries</p>
-                  <p className="text-[10px] text-muted-foreground">International projects</p>
+                  <p className="text-[11px] sm:text-xs font-black text-foreground">20+ Countries</p>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground">International projects</p>
                 </div>
               </motion.div>
 
               {/* Center Live Status Badge */}
               <div
                 onClick={() => openBookingModal("New Client Onboarding")}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/25 backdrop-blur-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+                className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-green-500/10 border border-green-500/25 backdrop-blur-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
               >
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs font-bold text-foreground/90 whitespace-nowrap">Currently accepting new clients 🔥</span>
+                <span className="text-[11px] sm:text-xs font-bold text-foreground/90 whitespace-nowrap">Currently accepting new clients 🔥</span>
               </div>
             </motion.div>
           </div>
