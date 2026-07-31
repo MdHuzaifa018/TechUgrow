@@ -86,83 +86,108 @@ export default function Team() {
 
         {/* Team Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {team.map((member, i) => (
-            <motion.div
-              key={member._id || i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="bg-card border border-border/80 rounded-[2.5rem] overflow-hidden shadow-lg shadow-black/5 hover:border-primary/40 hover:shadow-xl transition-all group flex flex-col justify-between"
-            >
-              <div>
-                {/* LARGE HIGH-IMPACT PORTRAIT IMAGE CONTAINER */}
-                <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-950">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-[0.96] contrast-[0.98] saturate-[0.96]"
-                  />
-                  {/* Soft Vignette Scrim & Anti-Glare Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent pointer-events-none" />
+          {team.map((member, i) => {
+            // Dynamic colorful shadow gradients for cards
+            const colorGradients = [
+              "from-blue-600 via-indigo-500 to-cyan-400",
+              "from-purple-600 via-indigo-500 to-blue-500",
+              "from-cyan-500 via-blue-600 to-indigo-500",
+              "from-indigo-600 via-purple-500 to-pink-500"
+            ];
+            const shadowGlows = [
+              "group-hover:shadow-[0_20px_50px_rgba(59,130,246,0.35)]",
+              "group-hover:shadow-[0_20px_50px_rgba(147,51,234,0.35)]",
+              "group-hover:shadow-[0_20px_50px_rgba(6,182,212,0.35)]",
+              "group-hover:shadow-[0_20px_50px_rgba(99,102,241,0.35)]"
+            ];
+            const currentGradient = colorGradients[i % colorGradients.length];
+            const currentShadow = shadowGlows[i % shadowGlows.length];
 
-                  {/* Department Badge */}
-                  <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-widest text-primary bg-card/90 backdrop-blur-md border border-primary/30 shadow-lg px-3.5 py-1 rounded-full whitespace-nowrap">
-                    {member.department || 'Growth Specialist'}
-                  </span>
-                </div>
+            return (
+              <motion.div
+                key={member._id || i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="relative group flex flex-col justify-between"
+              >
+                {/* Vibrant Colored Ambient Glow Backdrop */}
+                <div className={`absolute -inset-0.5 rounded-[2.5rem] bg-gradient-to-r ${currentGradient} opacity-0 group-hover:opacity-40 blur-xl transition-all duration-500`} />
 
-                {/* Content Area */}
-                <div className="p-6 space-y-3">
+                {/* Main Card */}
+                <div className={`relative bg-card border border-border/80 rounded-[2.5rem] overflow-hidden shadow-lg shadow-black/5 ${currentShadow} hover:border-primary/50 transition-all duration-500 flex flex-col justify-between h-full z-10`}>
                   <div>
-                    <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">
-                      {member.name}
-                    </h3>
-                    <p className="text-xs font-bold text-primary uppercase tracking-wider mt-0.5">
-                      {member.role}
-                    </p>
+                    {/* Top Vibrant Colored Accent Bar */}
+                    <div className={`h-1.5 w-full bg-gradient-to-r ${currentGradient}`} />
+
+                    {/* FULLY VISIBLE CRISP PORTRAIT IMAGE CONTAINER (NO DARK COVERING OVERLAY) */}
+                    <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-950">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+
+                      {/* Department Badge — Glassmorphic Pill */}
+                      <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-widest text-primary bg-slate-950/80 backdrop-blur-md border border-primary/40 shadow-lg shadow-black/20 px-3.5 py-1 rounded-full whitespace-nowrap">
+                        {member.department || 'Growth Specialist'}
+                      </span>
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="p-6 space-y-3">
+                      <div>
+                        <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">
+                          {member.name}
+                        </h3>
+                        <p className="text-xs font-bold text-primary uppercase tracking-wider mt-0.5">
+                          {member.role}
+                        </p>
+                      </div>
+
+                      <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-3">
+                        {member.bio}
+                      </p>
+
+                      {/* Skill Badges */}
+                      {member.skills && member.skills.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {member.skills.map((skill, idx) => (
+                            <span key={idx} className="text-[11px] font-bold px-2.5 py-1 rounded-xl bg-blue-500/10 dark:bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/20 shadow-sm">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-3">
-                    {member.bio}
-                  </p>
-
-                  {/* Skill Badges */}
-                  {member.skills && member.skills.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {member.skills.map((skill, idx) => (
-                        <span key={idx} className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-border/80">
-                          {skill}
-                        </span>
-                      ))}
+                  {/* Social Bar */}
+                  <div className="px-6 py-4 border-t border-border/60 flex items-center justify-between bg-slate-500/5">
+                    <span className="text-xs font-bold text-muted-foreground">Connect</span>
+                    <div className="flex items-center gap-2">
+                      {member.socials?.linkedin && (
+                        <a href={member.socials.linkedin} className="w-8 h-8 rounded-xl bg-card border border-border/80 flex items-center justify-center text-slate-500 hover:text-blue-500 hover:border-blue-500/40 hover:bg-blue-500/10 shadow-sm transition-all">
+                          <Linkedin size={14} />
+                        </a>
+                      )}
+                      {member.socials?.instagram && (
+                        <a href={member.socials.instagram} className="w-8 h-8 rounded-xl bg-card border border-border/80 flex items-center justify-center text-slate-500 hover:text-pink-500 hover:border-pink-500/40 hover:bg-pink-500/10 shadow-sm transition-all">
+                          <Instagram size={14} />
+                        </a>
+                      )}
+                      {member.socials?.email && (
+                        <a href={`mailto:${member.socials.email}`} className="w-8 h-8 rounded-xl bg-card border border-border/80 flex items-center justify-center text-slate-500 hover:text-indigo-500 hover:border-indigo-500/40 hover:bg-indigo-500/10 shadow-sm transition-all">
+                          <Mail size={14} />
+                        </a>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
-              </div>
-
-              {/* Social Bar */}
-              <div className="px-6 py-4 border-t border-border/60 flex items-center justify-between">
-                <span className="text-xs font-bold text-muted-foreground">Connect</span>
-                <div className="flex items-center gap-2">
-                  {member.socials?.linkedin && (
-                    <a href={member.socials.linkedin} className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-900 border border-border/80 flex items-center justify-center text-slate-500 hover:text-primary transition-colors">
-                      <Linkedin size={14} />
-                    </a>
-                  )}
-                  {member.socials?.instagram && (
-                    <a href={member.socials.instagram} className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-900 border border-border/80 flex items-center justify-center text-slate-500 hover:text-primary transition-colors">
-                      <Instagram size={14} />
-                    </a>
-                  )}
-                  {member.socials?.email && (
-                    <a href={`mailto:${member.socials.email}`} className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-900 border border-border/80 flex items-center justify-center text-slate-500 hover:text-primary transition-colors">
-                      <Mail size={14} />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
