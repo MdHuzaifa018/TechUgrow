@@ -7,37 +7,55 @@ import { useBookingModal } from "@/context/BookingContext";
 
 const staticFounders = [
   {
-    name: "Amritansh",
+    name: "Amritaansh Sinha",
     role: "Founder & CEO",
     expertise: "Growth Strategy & Performance Marketing",
-    bio: "Former performance marketer at a Top 10 digital agency who scaled over $20M in ad spend with consistent 4–6x ROAS. Amritansh founded TechUGrow with a singular mission: make enterprise-level growth systems accessible to ambitious brands of all sizes.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
-    quote: "We don't just deliver clicks — we build predictable revenue engines that dominate markets.",
+    bio: "MCA , entrepreneur, and digital enthusiast with a strong interest in technology, business growth, and digital marketing. As the Founder of TechUGrow, he focuses on helping businesses build a strong digital presence through practical, creative, and growth-focused solutions.",
+    image: "https://res.cloudinary.com/qpxxnswd/image/upload/v1785381988/techugrow/xoo5ibyhkvqfgs04xx0x.png",
+    quote: "We believe the right mix of technology, creativity, and strategy can help every business grow.",
     socials: { linkedin: "https://linkedin.com", instagram: "https://instagram.com", email: "amritansh@techugrow.com" },
-    achievements: ["$20M+ Ad Spend Scaled", "4–6x Average ROAS", "200+ Brands Scaled"],
+    achievements: ["Founder of TechUGrow", "Building Digital Solutions for Businesses", "Focused on Technology & Business Growth"],
     gradient: "from-blue-600 via-indigo-500 to-cyan-400",
     glowColor: "rgba(59,130,246,0.35)",
-    years: "8+ Years Leadership"
+    years: "2+ Years Leadership"
   },
   {
     name: "Huzaif Sheikh",
-    role: "Co-Founder & Head of Automation",
-    expertise: "CRM Systems & Marketing Automation",
-    bio: "Automation architect and CRM specialist who spent 6 years building sales infrastructure for SaaS companies. Huzaif leads TechUGrow's technology stack — designing the intelligent systems that let our clients scale without scaling their workload.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
-    quote: "Automation is the ultimate leverage. We replace manual bottlenecks with flawless AI workflows.",
-    socials: { linkedin: "https://linkedin.com", instagram: "https://instagram.com", email: "huzaif@techugrow.com" },
-    achievements: ["50+ CRM Architectures", "30h/wk Automated Per Client", "99% Client Retention"],
+    role: "Co-Founder & Tech Lead",
+    expertise: "Full Stack Developer, Tech & AI Automation Expert, 1+ Years Leadership",
+    bio: "full-stack developer, and tech enthusiast focused on building modern and practical digital solutions. As Co-Founder of TechUGrow, Huzaif leads the technical side of the company, working on web development, digital products, and exploring AI-powered solutions that help businesses grow.",
+    image: "https://res.cloudinary.com/qpxxnswd/image/upload/v1785369190/techugrow/xmmijenbweaoi8uonfnx.png",
+    quote: "We turn ideas into simple, modern, and scalable digital solutions that create real value for businesses.",
+    socials: { linkedin: "https://www.linkedin.com/in/huzaif-sheikh-6443a6330", instagram: "https://instagram.com", email: "mdhuzaifsh786@gmail.com" },
+    achievements: ["Co-Founder of TechUGrow", "Built Multiple Full-Stack & Web Projects", "Experience with Modern Web Technologies"],
     gradient: "from-purple-600 via-indigo-500 to-blue-500",
     glowColor: "rgba(168,85,247,0.35)",
-    years: "6+ Years Engineering"
+    years: "2+ Years in web Development"
   },
 ];
 
 const teamStats = [
-  { label: "Growth Specialists", value: "25+", icon: Users, desc: "In-house experts driving campaigns", color: "from-blue-500/20 to-cyan-500/20" },
-  { label: "Industry Certifications", value: "40+", icon: Award, desc: "Meta, Google & HubSpot Certified", color: "from-indigo-500/20 to-purple-500/20" },
-  { label: "Client Milestones", value: "500+", icon: Trophy, desc: "Successful growth milestones achieved", color: "from-purple-500/20 to-pink-500/20" },
+  {
+    label: "Digital Services",
+    value: "10+",
+    icon: Users,
+    desc: "Professional solutions under one roof",
+    color: "from-blue-500/20 to-cyan-500/20",
+  },
+  {
+    label: "Core Expertise",
+    value: "8+",
+    icon: Award,
+    desc: "Web, SEO, AI & Performance Marketing",
+    color: "from-indigo-500/20 to-purple-500/20",
+  },
+  {
+    label: "Projects Delivered",
+    value: "25+",
+    icon: Trophy,
+    desc: "Websites, branding & automation projects",
+    color: "from-purple-500/20 to-pink-500/20",
+  },
 ];
 
 export default function Founders() {
