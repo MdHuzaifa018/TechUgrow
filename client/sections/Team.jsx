@@ -96,43 +96,40 @@ export default function Team() {
               className="bg-card border border-border/80 rounded-[2.5rem] overflow-hidden shadow-lg shadow-black/5 hover:border-primary/40 hover:shadow-xl transition-all group flex flex-col justify-between"
             >
               <div>
-                {/* Round Avatar Container */}
-                <div className="pt-8 px-6 text-center">
-                  <div className="relative w-32 h-32 mx-auto mb-5">
-                    {/* Glowing gradient border */}
-                    <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 opacity-60 blur-md group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-card shadow-xl bg-slate-900">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500 filter brightness-[0.95] contrast-[0.98] saturate-[0.96]"
-                      />
-                      <div className="absolute inset-0 bg-slate-950/20 mix-blend-multiply pointer-events-none" />
-                    </div>
-                    {/* Department Badge */}
-                    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-widest text-primary bg-card border border-primary/30 shadow-md px-3 py-0.5 rounded-full whitespace-nowrap">
-                      {member.department || 'Growth Specialist'}
-                    </span>
-                  </div>
+                {/* LARGE HIGH-IMPACT PORTRAIT IMAGE CONTAINER */}
+                <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-slate-950">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-[0.96] contrast-[0.98] saturate-[0.96]"
+                  />
+                  {/* Soft Vignette Scrim & Anti-Glare Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent pointer-events-none" />
 
-                  {/* Name & Role */}
-                  <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors mt-2">
-                    {member.name}
-                  </h3>
-                  <p className="text-xs font-bold text-primary uppercase tracking-wider mt-1">
-                    {member.role}
-                  </p>
+                  {/* Department Badge */}
+                  <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-widest text-primary bg-card/90 backdrop-blur-md border border-primary/30 shadow-lg px-3.5 py-1 rounded-full whitespace-nowrap">
+                    {member.department || 'Growth Specialist'}
+                  </span>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 pt-3 space-y-4 text-center sm:text-left">
+                {/* Content Area */}
+                <div className="p-6 space-y-3">
+                  <div>
+                    <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs font-bold text-primary uppercase tracking-wider mt-0.5">
+                      {member.role}
+                    </p>
+                  </div>
+
                   <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-3">
                     {member.bio}
                   </p>
 
                   {/* Skill Badges */}
                   {member.skills && member.skills.length > 0 && (
-                    <div className="flex flex-wrap justify-center sm:justify-start gap-1.5 pt-1">
+                    <div className="flex flex-wrap gap-1.5 pt-1">
                       {member.skills.map((skill, idx) => (
                         <span key={idx} className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-border/80">
                           {skill}

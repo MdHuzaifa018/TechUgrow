@@ -141,16 +141,16 @@ export default function ImageUpload({ value, onChange, label = "Image Upload", p
                 <img
                   src={value}
                   alt="Preview"
-                  className="w-16 h-16 rounded-xl object-cover border-2 border-emerald-500/50 shadow-md shrink-0 bg-slate-900"
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover object-top border-2 border-emerald-500/50 shadow-lg shrink-0 bg-slate-900"
                 />
                 <div className="text-left overflow-hidden">
                   <span className="text-xs font-bold text-emerald-500 flex items-center gap-1">
-                    <CheckCircle2 size={13} /> Image Uploaded
+                    <CheckCircle2 size={14} /> Image Uploaded & Verified
                   </span>
-                  <p className="text-[11px] text-muted-foreground truncate max-w-[220px] font-mono mt-0.5">
+                  <p className="text-[11px] text-muted-foreground truncate max-w-[220px] font-mono mt-1">
                     {value}
                   </p>
-                  <p className="text-[10px] text-primary font-bold mt-1 hover:underline">
+                  <p className="text-[10px] text-primary font-bold mt-2 hover:underline">
                     Click or Drop to replace image
                   </p>
                 </div>
@@ -206,8 +206,8 @@ export default function ImageUpload({ value, onChange, label = "Image Upload", p
             )}
           </div>
           {value && (
-            <div className="flex items-center gap-3 p-2 bg-slate-100/80 dark:bg-slate-900/80 border border-border/80 rounded-xl">
-              <img src={value} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-border bg-slate-900" />
+            <div className="flex items-center gap-3.5 p-3 bg-slate-100/80 dark:bg-slate-900/80 border border-border/80 rounded-2xl">
+              <img src={value} alt="Preview" className="w-16 h-16 rounded-xl object-cover object-top border border-border bg-slate-900 shrink-0" />
               <span className="text-xs text-muted-foreground font-mono truncate">{value}</span>
             </div>
           )}

@@ -120,22 +120,23 @@ export default function AdminTeam() {
         {team.map((member) => (
           <div key={member._id} className="bg-card border border-border/80 p-5 rounded-3xl relative overflow-hidden group hover:border-blue-500/40 transition-all shadow-lg shadow-black/5 flex flex-col justify-between">
             <div>
-              <div className="flex justify-between items-start mb-4">
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center overflow-hidden shrink-0">
-                  {member.image ? (
-                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <UserCircle size={32} className="text-primary" />
-                  )}
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => handleOpenModal(member)} className="p-2 bg-blue-500/10 hover:bg-blue-500/20 rounded-xl text-blue-600 dark:text-blue-400 border border-blue-500/20 transition-all cursor-pointer"><Pencil size={15} /></button>
-                  {isSuperAdmin && <button onClick={() => handleDelete(member._id)} className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-xl text-red-500 border border-red-500/20 transition-all cursor-pointer"><Trash2 size={15} /></button>}
+              {/* Large Image Preview Header */}
+              <div className="relative h-48 w-full rounded-2xl bg-slate-900 border border-border/80 overflow-hidden mb-4">
+                {member.image ? (
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <UserCircle size={48} className="text-muted-foreground/40" />
+                  </div>
+                )}
+                <div className="absolute top-3 right-3 flex gap-2 bg-card/90 backdrop-blur-md p-1.5 rounded-xl border border-border/80 shadow-md">
+                  <button onClick={() => handleOpenModal(member)} className="p-1.5 bg-blue-500/10 hover:bg-blue-500/20 rounded-lg text-blue-600 dark:text-blue-400 transition-colors cursor-pointer" title="Edit Member"><Pencil size={15} /></button>
+                  {isSuperAdmin && <button onClick={() => handleDelete(member._id)} className="p-1.5 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-500 transition-colors cursor-pointer" title="Delete Member"><Trash2 size={15} /></button>}
                 </div>
               </div>
 
               <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-blue-500/10 px-2 py-0.5 rounded-md inline-block mb-1">
-                {member.department}
+                {member.department || 'Specialist'}
               </span>
               <h3 className="text-lg font-bold text-foreground">{member.name}</h3>
               <p className="text-xs font-semibold text-primary mb-2">{member.role}</p>
