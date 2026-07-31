@@ -103,23 +103,23 @@ const seedData = async () => {
     // 4. Create Team Members Data
     const team = [
       {
-        name: "Vikram Sharma",
+        name: "Huzaif Sheikh",
         role: "Senior Full Stack Lead",
         department: "Development & Engineering",
         bio: "Specialist in MERN stack, Next.js, and high-concurrency web architectures.",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/qpxxnswd/image/upload/v1785369190/techugrow/xmmijenbweaoi8uonfnx.png",
         skills: ["React", "Node.js", "System Design"],
-        socials: { linkedin: "#", instagram: "#", email: "vikram@techugrow.com" },
+        socials: { linkedin: "https://www.linkedin.com/in/huzaif-sheikh-6443a6330", instagram: "#", email: "mdhuzaifsh786@gmail.com" },
         order: 1
       },
       {
-        name: "Priya Patel",
-        role: "Lead UI/UX Designer",
-        department: "Product Design",
+        name: "Sahil Raj",
+        role: "Video Editor",
+        department: "Video Editor",
         bio: "Passionate about creating human-centric interfaces, smooth micro-interactions, and visual identity systems.",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
-        skills: ["Figma", "UI Animation", "Design Systems"],
-        socials: { linkedin: "#", instagram: "#", email: "priya@techugrow.com" },
+        image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop",
+        skills: ["Premier pro", "Capcut"],
+        socials: { linkedin: "#", instagram: "#", email: "sahil@techugrow.com" },
         order: 2
       },
       {
@@ -127,7 +127,7 @@ const seedData = async () => {
         role: "Head of Meta & Google Ads",
         department: "Performance Marketing",
         bio: "Data-driven media buyer managing 7-figure ad budgets across e-commerce and B2B SaaS.",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
         skills: ["Meta Ads", "Google PPC", "Funnel Optimization"],
         socials: { linkedin: "#", instagram: "#", email: "rohan@techugrow.com" },
         order: 3
