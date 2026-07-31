@@ -55,3 +55,8 @@ coverage/
 .gemini/
 brain/
 scratch/
+
+# Markdown Documentation Files (Keep local only, do not push to GitHub)
+*.md
+**/*.md
+
