@@ -61,8 +61,9 @@ const seedData = async () => {
     // 2. Create Site Settings
     await SiteSetting.create({
       siteName: 'TechUGrow',
-      contactEmail: 'hello@techugrow.com',
-      whatsappNumber: '8434890116',
+      contactEmail: 'techugrow@gmail.com',
+      phone: '+91 6205440130',
+      whatsappNumber: '916205440130',
     });
     console.log('✅ 2. Site settings created.');
 

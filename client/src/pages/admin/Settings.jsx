@@ -558,7 +558,7 @@ export default function AdminSettings() {
                 value={settings?.whatsappNumber || ""} 
                 onChange={e => setSettings({...settings, whatsappNumber: e.target.value})}
                 className="w-full bg-slate-100/70 dark:bg-slate-950/70 border border-border/80 rounded-xl px-4 py-3 outline-none focus:border-primary transition-colors text-foreground font-medium"
-                placeholder="Include country code, e.g., 919876543210"
+                placeholder="Include country code, e.g., 916205440130"
               />
             </div>
             <div className="space-y-2">

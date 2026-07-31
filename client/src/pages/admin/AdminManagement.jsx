@@ -134,7 +134,7 @@ function AdminModal({ title, form, setForm, onSave, onClose, saving, isEdit }) {
             {[
               { label: 'Full Name *', key: 'name', placeholder: 'John Doe', type: 'text' },
               { label: 'Email *', key: 'email', placeholder: 'john@company.com', type: 'email' },
-              { label: 'Phone', key: 'phone', placeholder: '+91 9876543210', type: 'tel' },
+              { label: 'Phone', key: 'phone', placeholder: '+91 6205440130', type: 'tel' },
             ].map(({ label, key, placeholder, type }) => (
               <div key={key} className={`space-y-1.5 ${key === 'name' ? 'col-span-2' : ''}`}>
                 <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">{label}</label>

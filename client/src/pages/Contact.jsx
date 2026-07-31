@@ -94,14 +94,14 @@ export default function ContactPage() {
                 <div className="w-14 h-14 glass rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Mail /></div>
                 <div>
                   <p className="text-muted-foreground text-xs font-bold uppercase tracking-[0.2em]">Email Us</p>
-                  <p className="text-xl font-bold">{settings?.contactEmail || "hello@techugrow.com"}</p>
+                  <p className="text-xl font-bold">{settings?.contactEmail || "techugrow@gmail.com"}</p>
                 </div>
               </div>
               <div className="flex items-center gap-6 group">
                 <div className="w-14 h-14 glass rounded-2xl flex items-center justify-center text-secondary group-hover:scale-110 transition-transform"><Phone /></div>
                 <div>
                   <p className="text-muted-foreground text-xs font-bold uppercase tracking-[0.2em]">Call Us</p>
-                  <p className="text-xl font-bold">{settings?.phone || "+91 98765 43210"}</p>
+                  <p className="text-xl font-bold">{settings?.phone || "+91 6205440130"}</p>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Phone Number *</label>
-                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-foreground/5 border border-border rounded-2xl py-4 px-6 text-sm text-foreground focus:border-primary/50 outline-none transition-all placeholder:text-muted-foreground/50" placeholder="+91 98765 43210" />
+                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-foreground/5 border border-border rounded-2xl py-4 px-6 text-sm text-foreground focus:border-primary/50 outline-none transition-all placeholder:text-muted-foreground/50" placeholder="+91 6205440130" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Est. Budget</label>

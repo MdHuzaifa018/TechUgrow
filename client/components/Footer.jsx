@@ -90,8 +90,8 @@ const Footer = () => {
             {/* Contact info */}
             <div className="space-y-3">
               {[
-                { icon: Mail, text: "hello@techugrow.com", href: "mailto:hello@techugrow.com" },
-                { icon: Phone, text: "+91 98765 43210", href: "tel:+919876543210" },
+                { icon: Mail, text: "techugrow@gmail.com", href: "mailto:techugrow@gmail.com" },
+                { icon: Phone, text: "+91 6205440130", href: "tel:+916205440130" },
                 { icon: MapPin, text: "Mumbai & Global Remote", href: "#" },
               ].map(({ icon: Icon, text, href }, i) => (
                 <a
