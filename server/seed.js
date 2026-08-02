@@ -172,7 +172,7 @@ const seedData = async () => {
         title: "Modern Tech HQ",
         category: "Workplace",
         image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
-        description: "Our state-of-the-art growth agency office space.",
+        description: "Our state-of-the-art growth company office space.",
         order: 1
       },
       {
@@ -190,7 +190,7 @@ const seedData = async () => {
         order: 3
       },
       {
-        title: "Annual Agency Summit",
+        title: "Annual Company Summit",
         category: "Events",
         image: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop",
         description: "Celebrating 200+ successful client growth milestones.",
