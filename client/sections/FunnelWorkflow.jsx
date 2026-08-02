@@ -77,6 +77,10 @@ const FunnelWorkflow = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Ensure elements are visible by default (prevents blank if trigger fires late)
+      gsap.set(".funnel-step", { opacity: 1, x: 0 });
+      gsap.set(".funnel-connector", { scaleY: 1 });
+
       // Animate the connector lines
       gsap.from(".funnel-connector", {
         scaleY: 0,
