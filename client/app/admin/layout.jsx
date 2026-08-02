@@ -1,12 +1,12 @@
-"use client";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, Users, Box, BookOpen, UserCircle, 
   MessageSquare, BarChart3, Settings, LogOut, Menu, X, ShieldCheck, Mail, Sun, Moon
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 import { cn } from "@/utils/cn";
 
 const sidebarItems = [
@@ -24,13 +24,23 @@ const sidebarItems = [
 
 export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const pathname = useLocation().pathname;
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const confirmLogout = () => {
+    setIsLogoutModalOpen(false);
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminInfo');
+    toast.info("Logged out successfully", { icon: "👋" });
+    navigate('/admin');
+  };
 
   const isLoginPage = pathname === "/admin" || pathname === "/admin/login";
 
@@ -48,13 +58,13 @@ export default function AdminLayout({ children }) {
         )}
       >
         <div className="h-24 flex items-center px-6 border-b border-border shrink-0">
-          <Link href="/admin/dashboard" className="flex items-center gap-2 group">
+          <Link to="/admin/dashboard" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg group-hover:shadow-primary/40 transition-shadow shrink-0">
-              <span className="text-white text-xs font-black">D</span>
+              <span className="text-white text-xs font-black">T</span>
             </div>
             {isSidebarOpen && (
               <span className="text-xl font-black tracking-tight text-foreground whitespace-nowrap">
-                DIGITALIZE<span className="gradient-text">U</span>
+                Tech<span className="gradient-text">UGrow</span>
               </span>
             )}
           </Link>
@@ -69,7 +79,7 @@ export default function AdminLayout({ children }) {
             return (
               <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className={cn(
                   "flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all group relative overflow-hidden",
                   isActive 
@@ -88,8 +98,11 @@ export default function AdminLayout({ children }) {
             );
           })}
           
-          <button className="flex items-center gap-4 px-5 py-3.5 rounded-2xl hover:bg-red-500/10 text-red-500 transition-all w-full mt-12 group border border-transparent hover:border-red-500/20">
-            <LogOut size={20} className="group-hover:rotate-12 transition-transform" />
+          <button 
+            onClick={() => setIsLogoutModalOpen(true)}
+            className="flex items-center gap-4 px-5 py-3.5 rounded-2xl hover:bg-red-500/10 text-red-500 transition-all w-full mt-12 group border border-transparent hover:border-red-500/20 cursor-pointer"
+          >
+            <LogOut size={20} className="group-hover:rotate-12 transition-transform shrink-0" />
             {isSidebarOpen && <span className="text-sm font-bold">Logout</span>}
           </button>
         </nav>
@@ -103,7 +116,7 @@ export default function AdminLayout({ children }) {
         <header className="h-24 border-b border-border flex items-center justify-between px-10 bg-background/50 backdrop-blur-xl sticky top-0 z-40">
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-            className="admin-icon-button w-11 h-11 flex items-center justify-center text-foreground"
+            className="admin-icon-button w-11 h-11 flex items-center justify-center text-foreground cursor-pointer"
           >
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -112,7 +125,7 @@ export default function AdminLayout({ children }) {
             {mounted && (
               <button
                 onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-                className="admin-icon-button w-11 h-11 flex items-center justify-center text-foreground"
+                className="admin-icon-button w-11 h-11 flex items-center justify-center text-foreground cursor-pointer"
                 aria-label="Toggle Theme"
               >
                 {resolvedTheme === "dark" ? <Sun size={18} className="text-yellow-400" /> : <Moon size={18} className="text-blue-600" />}
@@ -135,6 +148,59 @@ export default function AdminLayout({ children }) {
           {children}
         </div>
       </main>
+
+      {/* Logout Confirmation Modal */}
+      <AnimatePresence>
+        {isLogoutModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsLogoutModalOpen(false)}
+              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
+              className="relative bg-card border border-border rounded-[2rem] p-8 max-w-md w-full shadow-2xl z-10"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500">
+                  <LogOut size={22} />
+                </div>
+                <button
+                  onClick={() => setIsLogoutModalOpen(false)}
+                  className="w-8 h-8 rounded-xl bg-secondary/40 hover:bg-secondary/80 flex items-center justify-center text-muted-foreground hover:text-foreground"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+              <h3 className="text-xl font-black text-foreground mb-2">Log out of Admin Dashboard?</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed font-medium mb-8">
+                Are you sure you want to end your active session? You will need to enter your admin credentials to log back in.
+              </p>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsLogoutModalOpen(false)}
+                  className="flex-1 py-3 px-4 rounded-xl border border-border font-bold text-sm text-foreground hover:bg-secondary/60 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmLogout}
+                  className="flex-1 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-lg shadow-red-600/25 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <LogOut size={16} />
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

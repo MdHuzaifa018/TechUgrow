@@ -3,9 +3,11 @@ import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, Users, Box, BookOpen, UserCircle, 
   MessageSquare, Settings, LogOut, Menu, X, ShieldCheck, Mail, Sun, Moon, Megaphone, Image as ImageIcon,
-  Shield, ClipboardList, BarChart3, Database, Lock, CreditCard
+  Shield, ClipboardList, BarChart3, Database, Lock, CreditCard, AlertTriangle
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 import { cn } from "@/utils/cn";
 import Logo, { TechUGrowIcon } from "@/components/Logo";
 import api from "@/src/api";
@@ -34,6 +36,7 @@ const sidebarItems = [
 
 export default function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [adminUser, setAdminUser] = useState(null);
@@ -65,9 +68,11 @@ export default function AdminLayout() {
     }
   }, [pathname, navigate]);
 
-  const handleLogout = () => {
+  const confirmLogout = () => {
+    setIsLogoutModalOpen(false);
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminInfo');
+    toast.info("Logged out successfully", { icon: "👋" });
     navigate('/admin');
   };
 
@@ -127,8 +132,8 @@ export default function AdminLayout() {
           
           <div className="pt-6 border-t border-border/60 mt-6">
             <button 
-              onClick={handleLogout}
-              className="flex items-center gap-3.5 px-4 py-3 rounded-2xl hover:bg-red-500/10 text-red-500 font-bold text-sm transition-all w-full group border border-transparent hover:border-red-500/20"
+              onClick={() => setIsLogoutModalOpen(true)}
+              className="flex items-center gap-3.5 px-4 py-3 rounded-2xl hover:bg-red-500/10 text-red-500 font-bold text-sm transition-all w-full group border border-transparent hover:border-red-500/20 cursor-pointer"
             >
               <LogOut size={20} className="group-hover:rotate-12 transition-transform shrink-0" />
               {isSidebarOpen && <span>Logout</span>}
@@ -204,6 +209,86 @@ export default function AdminLayout() {
           <Outlet />
         </div>
       </main>
+
+      {/* Premium Company-Grade Logout Confirmation Modal */}
+      <AnimatePresence>
+        {isLogoutModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsLogoutModalOpen(false)}
+              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            />
+
+            {/* Modal Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
+              className="relative bg-card border border-border rounded-[2rem] p-6 sm:p-8 max-w-md w-full shadow-2xl overflow-hidden z-10"
+            >
+              {/* Header Icon */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500">
+                  <LogOut size={22} />
+                </div>
+                <button
+                  onClick={() => setIsLogoutModalOpen(false)}
+                  className="w-8 h-8 rounded-xl bg-secondary/40 hover:bg-secondary/80 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Title & Description */}
+              <h3 className="text-xl font-black text-foreground mb-2">
+                Log out of Admin Dashboard?
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed font-medium mb-6">
+                Are you sure you want to end your active session? You will need to enter your admin credentials to log back in.
+              </p>
+
+              {/* Admin Profile Summary Box */}
+              <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-secondary-bg border border-border/80 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shrink-0 overflow-hidden">
+                  {adminUser?.avatar ? (
+                    <img src={adminUser.avatar} alt="Admin" className="w-full h-full object-cover rounded-[10px]" />
+                  ) : (
+                    <div className="w-full h-full bg-card rounded-[10px] flex items-center justify-center font-black text-xs text-foreground uppercase">
+                      {adminUser?.name?.charAt(0) || 'A'}
+                    </div>
+                  )}
+                </div>
+                <div className="truncate">
+                  <p className="text-xs font-bold text-foreground leading-tight truncate">{adminUser?.name || 'Admin User'}</p>
+                  <p className="text-[11px] text-muted-foreground font-semibold truncate">{adminUser?.email || 'admin@techugrow.com'}</p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsLogoutModalOpen(false)}
+                  className="flex-1 py-3 px-4 rounded-xl border border-border font-bold text-sm text-foreground hover:bg-secondary/60 transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmLogout}
+                  className="flex-1 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-lg shadow-red-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <LogOut size={16} />
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
