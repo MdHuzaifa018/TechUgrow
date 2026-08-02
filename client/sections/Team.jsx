@@ -18,7 +18,7 @@ const staticTeam = [
     role: "Video Editor",
     department: "Video Editor",
     bio: "Passionate about creating human-centric interfaces, smooth micro-interactions, and visual identity systems.",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/qpxxnswd/image/upload/v1785482478/techugrow/rlrl4eij3h48isud1vvo.jpg",
     skills: ["Premier pro", "Capcut"],
     socials: { linkedin: "#", instagram: "#", email: "sahil@techugrow.com" }
   },
@@ -27,7 +27,7 @@ const staticTeam = [
     role: "Head of Meta & Google Ads",
     department: "Performance Marketing",
     bio: "Data-driven media buyer managing 7-figure ad budgets across e-commerce and B2B SaaS.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1589386417686-0d34b5903d23?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmVzc2lvbmFsJTIwb2ZmaWNlJTIwYm95JTIwaW5kaWFufGVufDB8fDB8fHww",
     skills: ["Meta Ads", "Google PPC", "Funnel Optimization"],
     socials: { linkedin: "#", instagram: "#", email: "rohan@techugrow.com" }
   },
@@ -36,7 +36,7 @@ const staticTeam = [
     role: "Content & Video Producer",
     department: "Creative Studio",
     bio: "Directing high-conversion brand video ads, podcast edits, and viral short-form Reels.",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop",
+    image: "https://plus.unsplash.com/premium_photo-1664478244612-d4b3238abd81?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW5kaWFuJTIwZ2lybCUyMHByb2Zlc3Npb25hbHxlbnwwfHwwfHx8MA%3D%3D",
     skills: ["Video Production", "Scriptwriting", "Creative Direction"],
     socials: { linkedin: "#", instagram: "#", email: "neha@techugrow.com" }
   }
