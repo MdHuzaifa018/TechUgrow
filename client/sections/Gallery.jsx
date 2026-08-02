@@ -8,7 +8,7 @@ const staticGallery = [
     title: "Modern Tech HQ",
     category: "Workplace",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
-    description: "Our state-of-the-art growth agency office space."
+    description: "Our state-of-the-art growth company office space."
   },
   {
     title: "Team Brainstorming Session",
@@ -23,7 +23,7 @@ const staticGallery = [
     description: "High-end post production and podcast recording facility."
   },
   {
-    title: "Annual Agency Summit",
+    title: "Annual Company Summit",
     category: "Events",
     image: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop",
     description: "Celebrating 200+ successful client growth milestones."
@@ -69,13 +69,13 @@ export default function Gallery() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-black text-primary uppercase tracking-widest mb-4">
             <ImageIcon size={14} className="animate-pulse" />
-            Agency Life & Showcase
+            Company Life & Showcase
           </div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
             Explore Our <span className="gradient-text">Workplace & Culture</span>
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg font-medium mt-4">
-            A behind-the-scenes look at our studios, client strategy sprints, and agency milestones.
+            A behind-the-scenes look at our studios, client strategy sprints, and company milestones.
           </p>
         </motion.div>
 

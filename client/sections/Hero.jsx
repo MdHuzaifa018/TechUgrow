@@ -84,7 +84,7 @@ const Hero = () => {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-primary/25 text-sm font-bold text-primary mb-8 cursor-pointer shadow-xl shadow-primary/5 group hover:border-primary/50 transition-all"
               >
                 <Sparkles size={15} className="animate-pulse text-cyan-400" />
-                <span>Full-Stack Digital Growth Agency 🚀</span>
+                <span>Full-Stack Digital Growth Company 🚀</span>
                 <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </motion.div>
@@ -198,7 +198,7 @@ const Hero = () => {
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
-                <span className="text-sm text-muted-foreground font-semibold ml-1">5.0 rated agency</span>
+                <span className="text-sm text-muted-foreground font-semibold ml-1">5.0 rated company</span>
               </div>
               <div className="h-4 w-px bg-border" />
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground">

@@ -107,7 +107,7 @@ const services = [
 
 const whyUs = [
   { title: "200+ Projects Delivered", desc: "Across web dev, ads, design, video & AI automation." },
-  { title: "Full-Stack Agency", desc: "One team handles everything — no need to juggle vendors." },
+  { title: "Full-Stack Company", desc: "One team handles everything — no need to juggle vendors." },
   { title: "Results-First Approach", desc: "Every decision is tied to measurable business outcomes." },
   { title: "International Experience", desc: "We've worked with clients in 20+ countries worldwide." },
 ];
@@ -198,7 +198,7 @@ const Analytics = () => {
                 Why brands choose <span className="gradient-text">TechUgrow?</span>
               </h3>
               <p className="text-secondary font-medium leading-relaxed mb-8">
-                We're not just an agency — we're a full-stack digital growth partner. From your first website to international campaigns, we scale with you.
+                We're not just a company — we're a full-stack digital growth partner. From your first website to international campaigns, we scale with you.
               </p>
               <Link to="/contact">
                 <button className="button-gradient text-white font-bold px-8 py-4 rounded-full shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">

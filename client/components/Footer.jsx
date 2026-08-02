@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowUpRight, Mail, Phone, MapPin, Sparkles, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Logo from "./Logo";
@@ -31,19 +31,42 @@ const footerLinks = {
   ],
 };
 
-const socials = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Youtube, href: "#", label: "YouTube" },
-  { icon: Twitter, href: "#", label: "Twitter/X" },
-];
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [siteSocials, setSiteSocials] = useState({
+    facebook: "#",
+    instagram: "#",
+    linkedin: "https://www.linkedin.com/company/techugrow/",
+    youtube: "#",
+    twitter: "#",
+  });
+
+  useEffect(() => {
+    api.get('/settings')
+      .then(res => {
+        if (res.data?.socialLinks) {
+          setSiteSocials(prev => ({
+            ...prev,
+            ...res.data.socialLinks,
+            linkedin: res.data.socialLinks.linkedin && res.data.socialLinks.linkedin !== "#" 
+              ? res.data.socialLinks.linkedin 
+              : "https://www.linkedin.com/company/techugrow/"
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const socials = [
+    { icon: Facebook, href: siteSocials.facebook || "#", label: "Facebook" },
+    { icon: Instagram, href: siteSocials.instagram || "#", label: "Instagram" },
+    { icon: Linkedin, href: siteSocials.linkedin || "https://www.linkedin.com/company/techugrow/", label: "LinkedIn" },
+    { icon: Youtube, href: siteSocials.youtube || "#", label: "YouTube" },
+    { icon: Twitter, href: siteSocials.twitter || "#", label: "Twitter/X" },
+  ];
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
@@ -113,6 +136,8 @@ const Footer = () => {
                 <motion.a
                   key={i}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   whileHover={{ y: -3, scale: 1.1 }}
                   className="w-10 h-10 rounded-2xl glass border border-border flex items-center justify-center text-secondary hover:text-primary hover:border-primary/50 transition-colors"

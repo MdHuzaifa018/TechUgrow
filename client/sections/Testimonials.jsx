@@ -62,7 +62,7 @@ const testimonials = [
     role: "CEO",
     company: "Nexus Financial",
     companyType: "Financial Services",
-    text: "Working in a regulated industry, we needed an agency that understood compliance while still driving aggressive growth. TechUGrow delivered exactly that — qualified leads at $9 CPL in a space where everyone else charged $45+. Incredible.",
+    text: "Working in a regulated industry, we needed a growth partner that understood compliance while still driving aggressive growth. TechUGrow delivered exactly that — qualified leads at $9 CPL in a space where everyone else charged $45+. Incredible.",
     image: "https://i.pravatar.cc/150?u=marcus-wright",
     result: "$9 CPL",
     roas: "3.4x ROAS",

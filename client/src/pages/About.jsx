@@ -22,7 +22,7 @@ export default function AboutPage() {
               We are <span className="gradient-text">Results-Driven</span>
             </h1>
             <p className="text-xl text-secondary leading-relaxed mb-16 max-w-2xl mx-auto font-medium">
-              Founded in 2020, our agency was built on a single premise: that marketing should be measurable, 
+              Founded in 2020, our company was built on a single premise: that marketing should be measurable, 
               scalable, and high-performance. We don't just run ads; we build growth engines.
             </p>
           </motion.div>

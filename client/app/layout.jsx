@@ -16,7 +16,7 @@ export const metadata = {
   keywords: "digital marketing, Meta Ads, Facebook ads, funnel building, marketing automation, lead generation, CRM, business growth",
   openGraph: {
     title: "DIGITALIZEU — Scale Your Business With AI-Powered Growth",
-    description: "Premium digital marketing agency specializing in Meta Ads, sales funnels, and marketing automation.",
+    description: "Premium digital growth company specializing in Meta Ads, sales funnels, and marketing automation.",
     type: "website",
   },
 };
