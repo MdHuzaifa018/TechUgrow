@@ -75,6 +75,21 @@
 
   * {
     border-color: var(--border);
+    transition:
+      background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Exclude transitions that would break animations */
+  *::before, *::after {
+    transition:
+      background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   body {
@@ -82,7 +97,6 @@
     color: var(--foreground);
     font-family: var(--font-sans);
     overflow-x: hidden;
-    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   input, select, textarea {
@@ -204,10 +218,91 @@
    THEME SWITCHING
    ============================================ */
 .theme-transition {
-  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-              color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   UNDER ONE ROOF — PREMIUM SERVICE CARDS
+   ============================================ */
+
+@keyframes border-draw {
+  0%   { clip-path: inset(0 100% 100% 0); }
+  25%  { clip-path: inset(0 0 100% 0); }
+  50%  { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+.roof-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Colour fill layer — hidden by default */
+.roof-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--rc-gradient, linear-gradient(135deg, #2563eb22, #06b6d422));
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 0;
+}
+
+/* Animated border layer */
+.roof-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--rc-border, linear-gradient(135deg, #2563eb, #06b6d4));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px;
+  opacity: 0;
+  clip-path: inset(0 100% 100% 0);
+  transition:
+    opacity 0.1s ease,
+    clip-path 0s;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.roof-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.roof-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--rc-shadow, 0 24px 60px -16px rgba(37,99,235,0.35));
+}
+
+.roof-card:hover::before {
+  opacity: 1;
+}
+
+.roof-card:hover::after {
+  opacity: 1;
+  animation: border-draw 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 /* ============================================
