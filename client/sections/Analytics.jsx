@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import {
   Code2, Settings, Brain, Layers, Target, Megaphone,
-  TrendingUp, Globe, Mic, Video, Film,
+  TrendingUp, Globe, Mic, Video, Film, FileText,
   CheckCircle, ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -18,6 +18,7 @@ const services = [
   { icon: Mic, title: "Podcast Editing", desc: "Studio-quality audio editing, noise removal, and distribution-ready podcast production.", color: "#a855f7", bg: "from-purple-600/10 to-violet-500/10", border: "border-purple-500/20" },
   { icon: Video, title: "Video Editing", desc: "Cinematic video content from reels to brand documentaries that captures and converts.", color: "#ef4444", bg: "from-red-600/10 to-orange-500/10", border: "border-red-500/20" },
   { icon: Film, title: "Brand Video Ads", desc: "Scroll-stopping video ad creatives for Meta, YouTube, and TikTok that drive clicks.", color: "#eab308", bg: "from-yellow-500/10 to-orange-500/10", border: "border-yellow-500/20" },
+  { icon: FileText, title: "Content Writing", desc: "Compelling SEO articles, sales copy, social posts, and email newsletters that captivate.", color: "#f97316", bg: "from-amber-600/10 to-orange-500/10", border: "border-amber-500/20" },
 ];
 
 const whyUs = [

@@ -136,6 +136,18 @@ const services = [
     isActive: true,
     order: 11,
   },
+  {
+    title: "Content Writing",
+    subtitle: "High-Converting Copy & Articles",
+    description: "Compelling SEO articles, sales copy, social posts, and email newsletters that captivate your audience and drive conversions.",
+    icon: "FileText",
+    gradient: "from-cyan-500 to-teal-500",
+    glowColor: "rgba(245,158,11,0.25)",
+    features: ["SEO Articles & Blogs", "Ad & Sales Copywriting", "Email Newsletters", "Social Media Captions"],
+    results: "2.5x Organic Engagement",
+    isActive: true,
+    order: 12,
+  },
 ];
 
 async function seedServices() {
