@@ -1,19 +1,20 @@
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/sections/Hero";
 import TrustedBy from "@/sections/TrustedBy";
-import Services from "@/sections/Services";
-import Founders from "@/sections/Founders";
-import Team from "@/sections/Team";
-import Analytics from "@/sections/Analytics";
-import FunnelWorkflow from "@/sections/FunnelWorkflow";
-import CaseStudies from "@/sections/CaseStudies";
-import Gallery from "@/sections/Gallery";
-import Packages from "@/sections/Packages";
-import Testimonials from "@/sections/Testimonials";
-// import VideoShowcase from "@/sections/VideoShowcase";
-import FAQ from "@/sections/FAQ";
-import CTA from "@/sections/CTA";
-import Footer from "@/components/Footer";
+
+// Lazy-load below-fold sections to improve initial load & eliminate scroll freeze
+const Services     = lazy(() => import("@/sections/Services"));
+const Founders     = lazy(() => import("@/sections/Founders"));
+const Team         = lazy(() => import("@/sections/Team"));
+const Analytics    = lazy(() => import("@/sections/Analytics"));
+const FunnelWorkflow = lazy(() => import("@/sections/FunnelWorkflow"));
+const Gallery      = lazy(() => import("@/sections/Gallery"));
+const Packages     = lazy(() => import("@/sections/Packages"));
+const Testimonials = lazy(() => import("@/sections/Testimonials"));
+const FAQ          = lazy(() => import("@/sections/FAQ"));
+const CTA          = lazy(() => import("@/sections/CTA"));
+const Footer       = lazy(() => import("@/components/Footer"));
 
 export default function Home() {
   return (
@@ -21,19 +22,21 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TrustedBy />
-      <Services />
-      <Founders />
-      <Team />
-      <Analytics />
-      <FunnelWorkflow />
-      {/* <CaseStudies /> */}
-      <Gallery />
-      <Packages />
-      <Testimonials />
-      {/* <VideoShowcase /> */}
-      <FAQ />
-      <CTA />
-      <Footer />
+      <Suspense fallback={null}>
+        <Services />
+        <Founders />
+        <Team />
+        <Analytics />
+        <FunnelWorkflow />
+        {/* <CaseStudies /> */}
+        <Gallery />
+        <Packages />
+        <Testimonials />
+        {/* <VideoShowcase /> */}
+        <FAQ />
+        <CTA />
+        <Footer />
+      </Suspense>
     </main>
   );
 }

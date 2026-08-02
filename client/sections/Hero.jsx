@@ -51,8 +51,8 @@ const Hero = () => {
 
       {/* Hardware-Accelerated Ambient Glow Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/15 dark:bg-primary/10 rounded-full blur-[130px] animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] bg-accent/15 dark:bg-accent/10 rounded-full blur-[130px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/15 dark:bg-primary/10 rounded-full blur-[130px] animate-pulse will-change-transform" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] bg-accent/15 dark:bg-accent/10 rounded-full blur-[130px] will-change-transform" />
       </div>
 
       {/* Smooth Mouse Follow Glow (Desktop only) */}
@@ -113,12 +113,11 @@ const Hero = () => {
                   <motion.span
                     key={i}
                     variants={{
-                      hidden: { opacity: 0, y: 25, filter: "blur(4px)" },
+                      hidden: { opacity: 0, y: 20 },
                       visible: {
                         opacity: 1,
                         y: 0,
-                        filter: "blur(0px)",
-                        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
                       },
                     }}
                     className={`inline-block ${
