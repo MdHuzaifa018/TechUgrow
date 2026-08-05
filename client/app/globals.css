@@ -332,6 +332,10 @@
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
+/* Hide scrollbar utility for drag carousels */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* ============================================
    PREMIUM ANIMATION SYSTEM
    ============================================ */
