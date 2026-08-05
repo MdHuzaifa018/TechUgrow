@@ -157,7 +157,7 @@ const Services = () => {
     setIsPricingModalOpen(true);
   };
 
-  // GSAP ScrollTrigger Pinned Horizontal Scroll (Identical to the-snag.vercel.app architecture)
+  // GSAP ScrollTrigger Pinned Horizontal Scroll — Lenis-compatible
   useEffect(() => {
     if (loading || services.length === 0) return;
 
@@ -166,21 +166,40 @@ const Services = () => {
 
     if (!target || !carousel) return;
 
-    const ctx = gsap.context(() => {
-      const getScrollAmount = () => carousel.scrollWidth - window.innerWidth + 80;
+    // Get Lenis instance from global (set by ReactLenis root)
+    const getLenis = () => window.__lenis;
 
-      gsap.to(carousel, {
-        x: () => -getScrollAmount(),
+    const ctx = gsap.context(() => {
+      const getScrollAmount = () => -(carousel.scrollWidth - window.innerWidth + 80);
+
+      const tween = gsap.to(carousel, {
+        x: getScrollAmount,
         ease: "none",
         scrollTrigger: {
           trigger: target,
           start: "top top",
-          end: () => `+=${getScrollAmount()}`,
-          scrub: 1,
+          end: () => `+=${Math.abs(getScrollAmount())}`,
+          scrub: 1.5,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           refreshPriority: 1,
+          onEnter: () => {
+            const lenis = getLenis();
+            if (lenis) lenis.stop();
+          },
+          onLeave: () => {
+            const lenis = getLenis();
+            if (lenis) lenis.start();
+          },
+          onEnterBack: () => {
+            const lenis = getLenis();
+            if (lenis) lenis.stop();
+          },
+          onLeaveBack: () => {
+            const lenis = getLenis();
+            if (lenis) lenis.start();
+          },
         },
       });
     }, targetRef);
@@ -188,11 +207,14 @@ const Services = () => {
     // Refresh after DOM layout renders cards fully
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 300);
+    }, 600);
 
     return () => {
       clearTimeout(timer);
       ctx.revert();
+      // Re-enable Lenis if we unmount while pinned
+      const lenis = getLenis();
+      if (lenis) lenis.start();
     };
   }, [services, loading]);
 
