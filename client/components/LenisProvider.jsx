@@ -5,7 +5,6 @@ export function LenisProvider({ children }) {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith('/admin');
 
-  // Disable smooth scroll for Admin Panel
   if (isAdmin) {
     return <>{children}</>;
   }
@@ -14,12 +13,14 @@ export function LenisProvider({ children }) {
     <ReactLenis
       root
       options={{
-        lerp: 0.1,
-        duration: 1.2,
+        lerp: 0.085,
+        duration: 0.9,
         smoothWheel: true,
         wheelMultiplier: 0.9,
         touchMultiplier: 1.5,
         syncTouch: false,
+        // Lenis won't intercept wheel on elements with [data-lenis-prevent]
+        prevent: (node) => node.closest("[data-lenis-prevent]") !== null,
       }}
     >
       {children}
